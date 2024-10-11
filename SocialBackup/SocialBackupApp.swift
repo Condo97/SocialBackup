@@ -9,12 +9,14 @@ import SwiftUI
 
 @main
 struct SocialBackupApp: App {
-    let persistenceController = PersistenceController.shared
-
+    
+    @StateObject var videoICloudUploadUpdater: VideoICloudUploadUpdater = VideoICloudUploadUpdater()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            MainView()
+                .environment(\.managedObjectContext, CDClient.mainManagedObjectContext)
+                .environmentObject(videoICloudUploadUpdater)
         }
     }
 }
