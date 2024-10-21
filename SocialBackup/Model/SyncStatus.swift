@@ -8,9 +8,9 @@
 import Foundation
 
 enum SyncStatus: String, Codable {
-    case notBackedUp       // Video is not backed up to iCloud.
-    case pendingBackup     // Video is ready to be backed up.
-    case backingUp         // Video is currently being backed up.
-    case backedUp          // Video is backed up to iCloud.
+    case notBackedUp       // Post is not backed up to iCloud.
+    case pendingBackup     // Post is ready to be backed up.
+    case backingUp         // Post is currently being backed up.
+    case backedUp          // Post is backed up to iCloud.
     case backupFailed      // Backup process failed.
 }

@@ -6,7 +6,20 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		BBC656102CBB0FEC00C83CB4 /* SocialBackupShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BBC656062CBB0FEC00C83CB4 /* SocialBackupShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BBC656862CBEECF200C83CB4 /* GradientLoadingBar in Frameworks */ = {isa = PBXBuildFile; productRef = BBC656852CBEECF200C83CB4 /* GradientLoadingBar */; };
+		BBC656D42CC4004C00C83CB4 /* GradientLoadingBar in Frameworks */ = {isa = PBXBuildFile; productRef = BBC656D32CC4004C00C83CB4 /* GradientLoadingBar */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
+		BBC6560E2CBB0FEC00C83CB4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BBFEB3902CB6E14D00289E9B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BBC656052CBB0FEC00C83CB4;
+			remoteInfo = SocialBackupShareExtension;
+		};
 		BBFEB3AE2CB6E14F00289E9B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BBFEB3902CB6E14D00289E9B /* Project object */;
@@ -23,13 +36,141 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		BBC656152CBB0FEC00C83CB4 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				BBC656102CBB0FEC00C83CB4 /* SocialBackupShareExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		BBC656062CBB0FEC00C83CB4 /* SocialBackupShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SocialBackupShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		BBC656802CBEC2DC00C83CB4 /* open-swiftui-animations-master.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = "open-swiftui-animations-master.zip"; path = "../../Downloads/open-swiftui-animations-master.zip"; sourceTree = "<group>"; };
 		BBFEB3982CB6E14D00289E9B /* SocialBackup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialBackup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBFEB3AD2CB6E14F00289E9B /* SocialBackupTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SocialBackupTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBFEB3B72CB6E14F00289E9B /* SocialBackupUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SocialBackupUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		BBC656142CBB0FEC00C83CB4 /* Exceptions for "SocialBackupShareExtension" folder in "SocialBackupShareExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = BBC656052CBB0FEC00C83CB4 /* SocialBackupShareExtension */;
+		};
+		BBC656922CC3F1FD00C83CB4 /* Exceptions for "SocialBackup" folder in "SocialBackupShareExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				AppDelegate.swift,
+				Application/Common/AppButtonStyle.swift,
+				Application/Common/AppTextFieldStyle.swift,
+				Application/Common/ClearFullScreenCoverView.swift,
+				Application/Common/Toolbar/CloseToolbarItem.swift,
+				Application/Common/Toolbar/LogoToolbarItem.swift,
+				Application/Common/WebView.swift,
+				Application/Post/PostContainer.swift,
+				Application/Post/PostImageCollectionView.swift,
+				Application/Post/PostMediaTranscriptionsContainer.swift,
+				Application/Post/PostMediaTranscriptionsView.swift,
+				Application/Post/PostPreviewContainer.swift,
+				Application/Post/PostPreviewView.swift,
+				Application/Post/PostStatsContainer.swift,
+				Application/Post/PostStatsView.swift,
+				Application/PostCollection/AddToPostCollectionView.swift,
+				Application/PostCollection/CreatePostCollectionView.swift,
+				Application/PostDownloader/PostDownloaderRowButton.swift,
+				Application/PostDownloader/PostDownloaderRowView.swift,
+				Application/PostDownloader/QueuedPostDownloaderContainer.swift,
+				Application/PostDownloader/QueuedPostDownloaderView.swift,
+				Application/Ultra/UltraView.swift,
+				Assets.xcassets,
+				Constants.swift,
+				DarwinNotifications/DarwinNotificationCenter.swift,
+				DarwinNotifications/DarwinNotificationNameExtension.swift,
+				DarwinNotifications/NSPersistentContainerExtension.swift,
+				Error/PostCollectionCDManagerError.swift,
+				Error/PostICloudUploadUpdaterError.swift,
+				Error/PostPersistenceManagerError.swift,
+				Generators/StructuredOutputGenerator.swift,
+				LaunchScreen.storyboard,
+				Model/CompletionRole.swift,
+				Model/GetPostInfoResponseExpectedMediaQualities.swift,
+				Model/GetPostInfoResponseExpectedMediaTypes.swift,
+				Model/GPTModels.swift,
+				"Model/Post+ComputedValues.swift",
+				Model/PostSource.swift,
+				Model/Sender.swift,
+				Networking/HTTPSClient.swift,
+				Networking/TikTokServer/Request/AuthRequest.swift,
+				Networking/TikTokServer/Request/BlankRequest.swift,
+				Networking/TikTokServer/Request/GetPostInfoRequest.swift,
+				Networking/TikTokServer/Request/OAI/CompletionContentType.swift,
+				Networking/TikTokServer/Request/OAI/InputImageDetail.swift,
+				Networking/TikTokServer/Request/OAI/OAIChatCompletionRequestMessage.swift,
+				Networking/TikTokServer/Request/OAI/OAIChatCompletionRequestMessageContent.swift,
+				Networking/TikTokServer/Request/OAI/OAIChatCompletionRequestMessageContentImageURL.swift,
+				Networking/TikTokServer/Request/OAI/OAIChatCompletionRequestMessageContentText.swift,
+				Networking/TikTokServer/Request/OAI/OAIChatCompletionRequestMessageContentType.swift,
+				Networking/TikTokServer/Request/RegisterTransactionRequest.swift,
+				Networking/TikTokServer/Request/StructuredOutputRequest.swift,
+				Networking/TikTokServer/Response/GetImportantConstantsResponse.swift,
+				Networking/TikTokServer/Response/GetPostInfoResponse.swift,
+				Networking/TikTokServer/Response/OAI/StructuredOutput/VideoSummarySO.swift,
+				Networking/TikTokServer/Response/RegisterUserResponse.swift,
+				Networking/TikTokServer/Response/StatusResponse.swift,
+				Networking/TikTokServer/Response/StructuredOutputResponse.swift,
+				Networking/TikTokServer/Response/SubscriptionIsActiveResponse.swift,
+				Networking/TikTokServer/TikTokServerConnector.swift,
+				Persistence/CDClient.swift,
+				Persistence/CloudDocumentsHandler.swift,
+				Persistence/CodableDataAdapter.swift,
+				Persistence/DocumentSaver.swift,
+				Persistence/MediaCDManager.swift,
+				Persistence/MediaICloudUploadUpdater.swift,
+				Persistence/MediaPersistenceManager.swift,
+				Persistence/PostCDManager.swift,
+				Persistence/PostCollectionCDManager.swift,
+				Persistence/PostPersistenceManager.swift,
+				SocialBackup.xcdatamodeld,
+				"Tools/Array+Safe.swift",
+				Tools/AudioTranscriber.swift,
+				Tools/AuthHelper.swift,
+				Tools/BounceableModifier.swift,
+				Tools/ConstantsUpdater.swift,
+				Tools/DefaultDateFormatter.swift,
+				Tools/HapticHelper.swift,
+				Tools/IAPManager.swift,
+				"Tools/Int+Word.swift",
+				Tools/MediaTypeFromExtension.swift,
+				Tools/OnPressReleaseGestureModifier.swift,
+				Tools/PasteboardHelper.swift,
+				"Tools/Post+ComputedProperties.swift",
+				Tools/PostAudioTranscriber.swift,
+				Tools/PostDownloaderAndSaverAndBackuper.swift,
+				Tools/PremiumUpdater.swift,
+				Tools/ProductUpdater.swift,
+				Tools/QueuedTikTokDownloader.swift,
+				Tools/SingleAxisGeometryReader.swift,
+				Tools/VideoAudioExtractor.swift,
+				"Tools/View+FlexibleView.swift",
+			);
+			target = BBC656052CBB0FEC00C83CB4 /* SocialBackupShareExtension */;
+		};
+		BBC656E52CC5386C00C83CB4 /* Exceptions for "SocialBackupShareExtension" folder in "SocialBackup" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ShareView.swift,
+			);
+			target = BBFEB3972CB6E14D00289E9B /* SocialBackup */;
+		};
 		BBFEB3E82CB859E200289E9B /* Exceptions for "SocialBackup" folder in "SocialBackup" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -40,10 +181,20 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		BBC656072CBB0FEC00C83CB4 /* SocialBackupShareExtension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				BBC656E52CC5386C00C83CB4 /* Exceptions for "SocialBackupShareExtension" folder in "SocialBackup" target */,
+				BBC656142CBB0FEC00C83CB4 /* Exceptions for "SocialBackupShareExtension" folder in "SocialBackupShareExtension" target */,
+			);
+			path = SocialBackupShareExtension;
+			sourceTree = "<group>";
+		};
 		BBFEB39A2CB6E14D00289E9B /* SocialBackup */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				BBFEB3E82CB859E200289E9B /* Exceptions for "SocialBackup" folder in "SocialBackup" target */,
+				BBC656922CC3F1FD00C83CB4 /* Exceptions for "SocialBackup" folder in "SocialBackupShareExtension" target */,
 			);
 			path = SocialBackup;
 			sourceTree = "<group>";
@@ -61,10 +212,19 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		BBC656032CBB0FEC00C83CB4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BBC656D42CC4004C00C83CB4 /* GradientLoadingBar in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BBFEB3952CB6E14D00289E9B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBC656862CBEECF200C83CB4 /* GradientLoadingBar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,12 +245,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BBC6567F2CBEC2DC00C83CB4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BBC656802CBEC2DC00C83CB4 /* open-swiftui-animations-master.zip */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		BBFEB38F2CB6E14D00289E9B = {
 			isa = PBXGroup;
 			children = (
 				BBFEB39A2CB6E14D00289E9B /* SocialBackup */,
 				BBFEB3B02CB6E14F00289E9B /* SocialBackupTests */,
 				BBFEB3BA2CB6E14F00289E9B /* SocialBackupUITests */,
+				BBC656072CBB0FEC00C83CB4 /* SocialBackupShareExtension */,
+				BBC6567F2CBEC2DC00C83CB4 /* Frameworks */,
 				BBFEB3992CB6E14D00289E9B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -101,6 +271,7 @@
 				BBFEB3982CB6E14D00289E9B /* SocialBackup.app */,
 				BBFEB3AD2CB6E14F00289E9B /* SocialBackupTests.xctest */,
 				BBFEB3B72CB6E14F00289E9B /* SocialBackupUITests.xctest */,
+				BBC656062CBB0FEC00C83CB4 /* SocialBackupShareExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -108,6 +279,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		BBC656052CBB0FEC00C83CB4 /* SocialBackupShareExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BBC656112CBB0FEC00C83CB4 /* Build configuration list for PBXNativeTarget "SocialBackupShareExtension" */;
+			buildPhases = (
+				BBC656022CBB0FEC00C83CB4 /* Sources */,
+				BBC656032CBB0FEC00C83CB4 /* Frameworks */,
+				BBC656042CBB0FEC00C83CB4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				BBC656072CBB0FEC00C83CB4 /* SocialBackupShareExtension */,
+			);
+			name = SocialBackupShareExtension;
+			packageProductDependencies = (
+				BBC656D32CC4004C00C83CB4 /* GradientLoadingBar */,
+			);
+			productName = SocialBackupShareExtension;
+			productReference = BBC656062CBB0FEC00C83CB4 /* SocialBackupShareExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		BBFEB3972CB6E14D00289E9B /* SocialBackup */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BBFEB3C12CB6E14F00289E9B /* Build configuration list for PBXNativeTarget "SocialBackup" */;
@@ -115,16 +309,19 @@
 				BBFEB3942CB6E14D00289E9B /* Sources */,
 				BBFEB3952CB6E14D00289E9B /* Frameworks */,
 				BBFEB3962CB6E14D00289E9B /* Resources */,
+				BBC656152CBB0FEC00C83CB4 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				BBC6560F2CBB0FEC00C83CB4 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				BBFEB39A2CB6E14D00289E9B /* SocialBackup */,
 			);
 			name = SocialBackup;
 			packageProductDependencies = (
+				BBC656852CBEECF200C83CB4 /* GradientLoadingBar */,
 			);
 			productName = SocialBackup;
 			productReference = BBFEB3982CB6E14D00289E9B /* SocialBackup.app */;
@@ -186,6 +383,9 @@
 				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
+					BBC656052CBB0FEC00C83CB4 = {
+						CreatedOnToolsVersion = 16.0;
+					};
 					BBFEB3972CB6E14D00289E9B = {
 						CreatedOnToolsVersion = 16.0;
 					};
@@ -208,6 +408,9 @@
 			);
 			mainGroup = BBFEB38F2CB6E14D00289E9B;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				BBC656842CBEECF200C83CB4 /* XCRemoteSwiftPackageReference "GradientLoadingBar" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = BBFEB3992CB6E14D00289E9B /* Products */;
 			projectDirPath = "";
@@ -216,11 +419,19 @@
 				BBFEB3972CB6E14D00289E9B /* SocialBackup */,
 				BBFEB3AC2CB6E14F00289E9B /* SocialBackupTests */,
 				BBFEB3B62CB6E14F00289E9B /* SocialBackupUITests */,
+				BBC656052CBB0FEC00C83CB4 /* SocialBackupShareExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		BBC656042CBB0FEC00C83CB4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BBFEB3962CB6E14D00289E9B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -245,6 +456,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		BBC656022CBB0FEC00C83CB4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BBFEB3942CB6E14D00289E9B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -269,6 +487,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		BBC6560F2CBB0FEC00C83CB4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BBC656052CBB0FEC00C83CB4 /* SocialBackupShareExtension */;
+			targetProxy = BBC6560E2CBB0FEC00C83CB4 /* PBXContainerItemProxy */;
+		};
 		BBFEB3AF2CB6E14F00289E9B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BBFEB3972CB6E14D00289E9B /* SocialBackup */;
@@ -282,6 +505,60 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		BBC656122CBB0FEC00C83CB4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SocialBackupShareExtension/SocialBackupShareExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WNCN9TJFT3;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SocialBackupShareExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SocialBackupShareExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.acapplications.SocialBackup.SocialBackupShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BBC656132CBB0FEC00C83CB4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SocialBackupShareExtension/SocialBackupShareExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WNCN9TJFT3;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SocialBackupShareExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SocialBackupShareExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.acapplications.SocialBackup.SocialBackupShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		BBFEB3BF2CB6E14F00289E9B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -414,6 +691,9 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SocialBackup/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = grab;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Allow microphone access for advanced transcription features.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Transcribe video posts by allowing app to recognize speech.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -446,6 +726,9 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SocialBackup/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = grab;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Allow microphone access for advanced transcription features.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Transcribe video posts by allowing app to recognize speech.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -540,6 +823,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		BBC656112CBB0FEC00C83CB4 /* Build configuration list for PBXNativeTarget "SocialBackupShareExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BBC656122CBB0FEC00C83CB4 /* Debug */,
+				BBC656132CBB0FEC00C83CB4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		BBFEB3932CB6E14D00289E9B /* Build configuration list for PBXProject "SocialBackup" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -577,6 +869,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		BBC656842CBEECF200C83CB4 /* XCRemoteSwiftPackageReference "GradientLoadingBar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:fxm90/GradientLoadingBar.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BBC656852CBEECF200C83CB4 /* GradientLoadingBar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BBC656842CBEECF200C83CB4 /* XCRemoteSwiftPackageReference "GradientLoadingBar" */;
+			productName = GradientLoadingBar;
+		};
+		BBC656D32CC4004C00C83CB4 /* GradientLoadingBar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BBC656842CBEECF200C83CB4 /* XCRemoteSwiftPackageReference "GradientLoadingBar" */;
+			productName = GradientLoadingBar;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BBFEB3902CB6E14D00289E9B /* Project object */;
 }

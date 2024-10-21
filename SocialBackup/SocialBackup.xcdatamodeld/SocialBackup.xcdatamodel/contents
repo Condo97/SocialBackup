@@ -1,17 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23231" systemVersion="24A335" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Collection" representedClassName="Collection" syncable="YES" codeGenerationType="class">
-        <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="videos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Video" inverseName="collection" inverseEntity="Video"/>
-    </entity>
-    <entity name="Video" representedClassName="Video" syncable="YES" codeGenerationType="class">
-        <attribute name="getVideoInfoResponse" optional="YES" attributeType="Binary"/>
+    <entity name="Media" representedClassName="Media" syncable="YES" codeGenerationType="class">
         <attribute name="iCloudFilename" optional="YES" attributeType="String"/>
-        <attribute name="lastModifyDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="index" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="localFilename" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="transcription" optional="YES" attributeType="String"/>
+        <relationship name="post" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Post" inverseName="medias" inverseEntity="Post"/>
+    </entity>
+    <entity name="Post" representedClassName="Post" syncable="YES" codeGenerationType="class">
+        <attribute name="generatedEmotionsCSV" optional="YES" attributeType="String"/>
+        <attribute name="generatedKeyEntitiesCSV" optional="YES" attributeType="String"/>
+        <attribute name="generatedKeywordsCSV" optional="YES" attributeType="String"/>
+        <attribute name="generatedMediumSummary" optional="YES" attributeType="String"/>
+        <attribute name="generatedShortSummary" optional="YES" attributeType="String"/>
+        <attribute name="generatedTagsCSV" optional="YES" attributeType="String"/>
+        <attribute name="generatedTitle" optional="YES" attributeType="String"/>
+        <attribute name="generatedTopic" optional="YES" attributeType="String"/>
+        <attribute name="getPostInfoResponse" optional="YES" attributeType="Binary"/>
+        <attribute name="lastModifyDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="saveDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="subdirectory" optional="YES" attributeType="String"/>
         <attribute name="thumbnail" optional="YES" attributeType="Binary"/>
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="collection" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Collection" inverseName="videos" inverseEntity="Collection"/>
+        <relationship name="collections" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PostCollection" inverseName="posts" inverseEntity="PostCollection"/>
+        <relationship name="medias" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Media" inverseName="post" inverseEntity="Media"/>
+    </entity>
+    <entity name="PostCollection" representedClassName="PostCollection" syncable="YES" codeGenerationType="class">
+        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="isFavorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="lastModifyDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Post" inverseName="collections" inverseEntity="Post"/>
     </entity>
 </model>

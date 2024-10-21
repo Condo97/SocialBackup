@@ -13,6 +13,12 @@ actor CloudDocumentsHandler {
     let coordinator = NSFileCoordinator()
 
     func write(targetURL: URL, data: Data) throws {
+        // Ensure the directory exists
+        let directoryURL = targetURL.deletingLastPathComponent()
+        if !FileManager.default.fileExists(atPath: directoryURL.path) {
+            try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
+        }
+        
         var coordinationError: NSError?
         var writeError: Error?
 

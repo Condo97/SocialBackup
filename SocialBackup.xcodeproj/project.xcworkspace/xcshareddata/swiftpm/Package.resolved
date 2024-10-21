@@ -1,0 +1,15 @@
+{
+  "originHash" : "5fdeea80d29cb4e89c50a37f2684305a84066ba05a144f2348a1cfdd61d60543",
+  "pins" : [
+    {
+      "identity" : "gradientloadingbar",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:fxm90/GradientLoadingBar.git",
+      "state" : {
+        "revision" : "85cd3fe00dd85135ba32d8a6629144c5590430ac",
+        "version" : "3.0.0"
+      }
+    }
+  ],
+  "version" : 3
+}

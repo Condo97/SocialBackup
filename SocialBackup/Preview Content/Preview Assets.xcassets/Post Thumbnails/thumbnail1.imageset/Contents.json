@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "e7ee17debd114e97b43253ec9f99b9e0_1704863381~tplv-tiktokx-cropcenter-300-400.jpeg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

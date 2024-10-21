@@ -12,7 +12,13 @@ struct Constants {
     
     struct Additional {
         
+        static let appGroupName = "group.socialbackup"
         static let coreDataModelName = "SocialBackup"
+        static let defaultShareURL = URL(string: "https://apple.com")! // TODO: Add default share URL
+        static let fallbackAnnualProductID = "grab_ultrayearly" // TODO: Add fallback annual product ID
+        static let fallbackMonthlyProductID = "grab_ultramonthly" // TODO: Add fallback monthly product ID
+        static let fallbackSharedSecret = "" // TODO: Add shared secret
+        static let fallbackWeeklyProductID = "grab_ultraweekly" // TODO: Add fallback weekly product ID
         
     }
     
@@ -38,22 +44,52 @@ struct Constants {
         
         struct TikTokServer {
             
-            struct Endpionts {
+            struct Endpoints {
                 
-                static let getVideoInfo = "/getVideoInfo"
+                struct StructuredOutput {
+                    
+                    static let videoSummary = "/videoSummary"
+                    
+                }
+                
+                static let getImportantConstants = "/getImportantConstants"
+                static let getPostInfo = "/getVideoInfo"
+                static let getIsSubscriptionActive = "/getIsSubscriptionActive"
+                static let registerTransaction = "/registerTransaction"
+                static let registerUser = "/registerUser"
+                static let structuredOutputBase = "/so"
                 
             }
+            
             
             static let baseURL = "https://chitchatserver.com:9100/v1"
             
         }
+        
+        static let termsAndConditions = "" // TODO: Add terms and conditions URL
+        static let privacyPolicy = "" // TODO: Add privacy policy URL
+        
+    }
+    
+    struct UserDefaults {
+        
+        static let annualDisplayPrice = "annualDisplayPrice"
+        static let annualProductID = "annualProductID"
+        static let hapticsDisabled = "hapticsDisabled"
+        static let monthlyDisplayPrice = "monthlyDisplayPrice"
+        static let monthlyProductID = "monthlyProductID"
+        static let sharedSecret = "sharedSecret"
+        static let shareURL = "shareURL"
+        static let storedIsPremium = "storedIsPremium"
+        static let weeklyDisplayPrice = "weeklyDisplayPrice"
+        static let weeklyProductID = "weeklyProductID"
         
     }
     
 }
 
 struct Colors {
-//    static let accentColor = Color("UserChatBubbleColor")
+    static let accent = Color("Accent")
     static let alertTintColor = Color(uiColor: UIColor(named: "ElementBackgroundColor")!.resolvedColor(with: UITraitCollection(userInterfaceStyle: .light)))
     static let background = Color("ChatBackgroundColor")
     static let buttonBackground = Color("UserChatBubbleColor")
@@ -70,4 +106,17 @@ struct Colors {
     static let topBarBackgroundColor = Color( "TopBarBackgroundColor")
     static let bottomBarBackgroundColor = Color( "BottomBarBackgroundColor")
 //    static let alertTintColor = userChatBubbleColor.resolvedColor(with: UITraitCollection(userInterfaceStyle: .light))
+}
+
+struct Images {
+    
+    struct SocialIcons {
+        static let tiktok = "TikTok"
+        static let instagram = "Instagram"
+        static let x = "X"
+        static let youTube = "YouTube"
+    }
+    
+    static let logoText = "LogoText"
+    
 }
