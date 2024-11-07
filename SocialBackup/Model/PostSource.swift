@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum PostSource: CaseIterable {
+enum PostSource: Codable, CaseIterable {
     
     case tiktok
     case instagram

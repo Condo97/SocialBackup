@@ -15,6 +15,8 @@ struct ShareView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
+    @EnvironmentObject private var postDownloaderAndSaverAndBackuper: PostDownloaderAndSaverAndBackuper
+    
     @StateObject private var mediaICloudUploadUpdater = MediaICloudUploadUpdater()
     @StateObject private var queuedTikTokDownloader = QueuedTikTokDownloader()
     
@@ -24,9 +26,11 @@ struct ShareView: View {
     
     @State private var hasProcessed: Bool = false
     
+    @State private var isPresented: Bool = true
+    
     var body: some View {
         Color.clear
-            .sheet(isPresented: .constant(true)) {
+            .sheet(isPresented: $isPresented) {
                 ZStack {
                     Colors.background
                     VStack {
@@ -46,7 +50,7 @@ struct ShareView: View {
                                 .tint(.yellow)
                                 .padding(.bottom)
                             
-                            Button(action: onDismiss) {
+                            Button(action: terminateAndDismiss) {
                                 Text("Background")
                                     .frame(maxWidth: .infinity)
                                     .overlay(alignment: .trailing) {
@@ -69,6 +73,10 @@ struct ShareView: View {
                 .onAppear {
                     originalQueueCount = QueuedTikTokDownloader.queue.count
                 }
+                .onDisappear {
+                    // Stop and dismiss
+                    terminateAndDismiss()
+                }
                 .task { // Begin processing queue
                     // Ensure authToken
                     let authToken: String
@@ -82,6 +90,7 @@ struct ShareView: View {
                     
                     queuedTikTokDownloader.startProcessingQueue(
                         authToken: authToken,
+                        postDownloaderAndSaverAndBackuper: postDownloaderAndSaverAndBackuper,
                         mediaICloudUploadUpdater: mediaICloudUploadUpdater,
                         managedContext: viewContext)
                 }
@@ -129,6 +138,12 @@ struct ShareView: View {
 //                isAnimatingIsLoadingDownloadPostResult = newValue
 //            }
 //        }
+    }
+    
+    func terminateAndDismiss() {
+        // Stop and dismiss
+//        queuedTikTokDownloader.terminate()
+        onDismiss()
     }
     
 }

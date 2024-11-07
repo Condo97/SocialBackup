@@ -9,9 +9,11 @@ import SwiftUI
 
 struct PostPreviewContainer: View {
     
-    var post: Post
+    @ObservedObject var post: Post
     
     @Environment(\.managedObjectContext) private var viewContext
+    
+    @State private var isDisplayingRepair: Bool = false
     
     @State private var isShowingAddToCollection: Bool = false
     
@@ -54,6 +56,10 @@ struct PostPreviewContainer: View {
             }
         }
         .addPostToCollectionFullScreenCover(isPresented: $isShowingAddToCollection, post: post)
+    }
+    
+    func hasMedia() async throws -> Bool {
+        return try await !PostCDManager.getMedia(for: post, in: viewContext).isEmpty
     }
     
 }

@@ -18,13 +18,11 @@ struct PostDownloadMiniContainer: View {
     
     @EnvironmentObject private var postICloudUploadUpdater: MediaICloudUploadUpdater
     
-    @State private var tikTokDownloader = PostDownloaderAndSaverAndBackuper()
-    
 //    @State private var isLoading: Bool = false
     
-    @State private var text: String = "https://www.tiktok.com/@streetcraft/video/7422012800328797470"//""
+    @State private var text: String = ""//"https://www.tiktok.com/@streetcraft/video/7422012800328797470"//""
     
-    @State private var inputIsValid: Bool = true//false
+    @State private var inputIsValid: Bool = false
     
     var body: some View {
         PostDownloadMiniView(

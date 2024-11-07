@@ -14,7 +14,8 @@ struct PostPreviewView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
-//    @EnvironmentObject private var postICloudUploadUpdater: MediaICloudUploadUpdater
+    @EnvironmentObject private var mediaICloudUploadUpdater: MediaICloudUploadUpdater
+    @EnvironmentObject private var postDownloaderAndSaverAndBackuper: PostDownloaderAndSaverAndBackuper
     
     @State private var alertShowingErrorUploading: Bool = false
     
@@ -31,11 +32,51 @@ struct PostPreviewView: View {
                 Text(title)
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
+                    .foregroundStyle(Colors.text)
             } else {
-                Text("?")
+                if postDownloaderAndSaverAndBackuper.repairInProgress.contains(where: {$0 == post.id}) {
+                    Text("?")
+                        .foregroundStyle(Colors.text)
+                } else {
+                    Button(action: {
+                        Task {
+                            let authToken: String
+                            do {
+                                authToken = try await AuthHelper.ensure()
+                            } catch {
+                                // TODO: Handle Errors
+                                print("Error ensuring authToken in PostPreviewView... \(error)")
+                                return
+                            }
+                            
+                            do {
+                                try await postDownloaderAndSaverAndBackuper.repair(
+                                    post: post,
+                                    authToken: authToken,
+                                    mediaICloudUploadUpdater: mediaICloudUploadUpdater,
+                                    in: viewContext)
+                            } catch {
+                                // TODO: Handle Errors
+                                print("Error repairing post in PostPreviewView... \(error)")
+                            }
+                        }
+                    }) {
+                        Image(systemName: "arrow.circlepath")
+                            .foregroundStyle(Colors.text)
+                    }
+                }
             }
         }
         .font(.custom(Constants.FontName.body, size: 17.0))
+        .overlay {
+            if (post.title?.isEmpty ?? true) && (post.thumbnail?.isEmpty ?? true) || postDownloaderAndSaverAndBackuper.repairInProgress.contains(where: {$0 == post.id}) { // The first part is to ensure it shows up with the progress view when loading in the first time.. since the title and the thumbnail are both empty the post is assumed to just not be loaded TODO: Make sure this applies comprehensively
+                ZStack {
+                    Colors.background
+                    ProgressView()
+                        .tint(Colors.text)
+                }
+            }
+        }
 //        .overlay(alignment: .bottomTrailing) {
 //            Button(action: {
 //                let notBackedUpMedias = medias.filter({ $0.iCloudFilename == nil })

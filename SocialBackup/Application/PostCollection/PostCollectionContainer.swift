@@ -13,10 +13,11 @@ struct PostCollectionContainer: View {
     
     var body: some View {
         PostCollectionView(
-            title: LocalizedStringKey(postCollection.title ?? "*Collection*"),
+//            title: LocalizedStringKey(postCollection.title ?? "*Collection*"),
             posts: FetchRequest(
                 sortDescriptors: [NSSortDescriptor(key: #keyPath(Post.lastModifyDate), ascending: false)],
                 predicate: NSPredicate(format: "ANY %K = %@", #keyPath(Post.collections), postCollection)))
+        .navigationTitle(LocalizedStringKey(postCollection.title ?? "*Collection*"))
     }
 }
 

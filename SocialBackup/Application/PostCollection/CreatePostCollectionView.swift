@@ -18,8 +18,10 @@ struct CreatePostCollectionView: View {
         VStack(alignment: .leading) {
             Text("New Collection")
                 .font(.custom(Constants.FontName.heavy, size: 20.0))
-            TextField("Enter collection name...", text: $collectionName)
+//            TextField("Enter collection name...", text: $collectionName)
+            TextField("", text: $collectionName, prompt: Text("Enter collection name...").foregroundColor(Colors.text.opacity(0.6)))
                 .appTextFieldStyle()
+                .foregroundStyle(Colors.text)
             
             HStack {
                 Button(action: {

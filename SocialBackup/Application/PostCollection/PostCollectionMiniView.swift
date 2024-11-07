@@ -51,11 +51,12 @@ struct PostCollectionMiniView: View {
 //                        .frame(minWidth: itemMinWidth, maxWidth: itemMaxWidth, maxHeight: itemMaxHeight)
                 }
             }
+            .padding()
             
 //            Text(postCollection.title ?? "*Collection*")
             Text(title)
                 .font(.custom(Constants.FontName.medium, size: 17.0))
-                .padding(.top)
+//                .padding(.top)
         }
     }
     

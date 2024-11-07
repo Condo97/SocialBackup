@@ -14,6 +14,7 @@ struct VideoSummarySO: Codable {
     let shortSummary: String
     let mediumSummary: String
     let emotions: [String]
+    let categories: [String]
     let tags: [String]
     let keywords: [String]
     let keyEntities: [String]
@@ -24,6 +25,7 @@ struct VideoSummarySO: Codable {
         case shortSummary
         case mediumSummary
         case emotions
+        case categories
         case tags
         case keywords
         case keyEntities

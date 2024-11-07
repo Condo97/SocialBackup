@@ -82,5 +82,9 @@ class DocumentSaver {
         FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.Additional.appGroupName)!.appendingPathComponent(path, conformingTo: .url)
     }
     
+    static func fileExists(at path: String) -> Bool {
+        let url = getFullContainerURL(from: path)
+        return FileManager.default.fileExists(atPath: url.path)
+    }
     
 }

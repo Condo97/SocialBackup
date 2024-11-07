@@ -11,6 +11,7 @@ struct FeedSearchFilterView: View {
     
 //    var adding: (_ word: String) -> Void
 //    var removing: (_ word: String) -> Void
+    @Binding var filterText: String
     @Binding var selectedFilterWords: [String]
     
 //    @State private var selectedFilterEmotions: [String] = []
@@ -25,7 +26,7 @@ struct FeedSearchFilterView: View {
         ScrollView {
             VStack {
                 // Post Emotions
-                let emotions = posts.compactMap { $0.generatedEmotionsCSV }.flatMap { $0.components(separatedBy: ",") }
+                let emotions = posts.compactMap { $0.generatedEmotionsCSV }.flatMap { $0.components(separatedBy: ",") }.filter({ filterText.isEmpty ? true : $0.lowercased().contains(filterText.lowercased()) }).sorted()
                 if !emotions.isEmpty {
                     VStack(alignment: .leading, spacing: 8.0) {
                         Text("Emotions:")
@@ -64,7 +65,7 @@ struct FeedSearchFilterView: View {
                 }
                 
                 // Tags
-                let tags = posts.compactMap { $0.generatedTagsCSV }.flatMap { $0.components(separatedBy: ",") }
+                let tags = posts.compactMap { $0.generatedTagsCSV }.flatMap { $0.components(separatedBy: ",") }.filter({ filterText.isEmpty ? true : $0.lowercased().contains(filterText.lowercased()) }).sorted()
                 if !tags.isEmpty {
                     VStack(alignment: .leading, spacing: 8.0) {
                         Text("Tags:")
@@ -105,7 +106,7 @@ struct FeedSearchFilterView: View {
                 // Keywords
                 let keywords = posts.compactMap { $0.generatedKeywordsCSV }.flatMap { $0.components(separatedBy: ",") }
                 let keyEntities = posts.compactMap { $0.generatedKeyEntitiesCSV }.flatMap { $0.components(separatedBy: ",") }
-                let keys = keywords + keyEntities
+                let keys = (keywords + keyEntities).filter({ filterText.isEmpty ? true : $0.lowercased().contains(filterText.lowercased()) }).sorted()
                 if !keys.isEmpty {
                     VStack(alignment: .leading, spacing: 8.0) {
                         Text("Keywords:")
@@ -150,7 +151,7 @@ struct FeedSearchFilterView: View {
 
 #Preview {
     
-    FeedSearchFilterView(selectedFilterWords: .constant(["word1", "word2", "word3"]))
+    FeedSearchFilterView(filterText: .constant(""), selectedFilterWords: .constant(["word1", "word2", "word3"]))
         .padding()
         .background(Colors.background)
     

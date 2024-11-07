@@ -10,7 +10,7 @@ import SwiftUI
 struct PostCollectionView: View {
     
 //    var postCollection: PostCollection
-    var title: LocalizedStringKey
+//    var title: LocalizedStringKey
     @FetchRequest var posts: FetchedResults<Post>
     
     @State private var presentingPost: Post?
@@ -25,12 +25,14 @@ struct PostCollectionView: View {
                         }
                     }) {
                         PostPreviewContainer(post: post)
+                            .aspectRatio(0.76, contentMode: .fill)
+                            .clipped()
                     }
                 }
             }
             .padding(.horizontal)
         }
-        .navigationTitle(title)
+//        .navigationTitle(title)
         .background(Colors.background)
         .postContainer(post: $presentingPost)
     }
@@ -42,7 +44,7 @@ struct PostCollectionView: View {
     let postCollection = try! CDClient.mainManagedObjectContext.fetch(PostCollection.fetchRequest())[0]
     
     return PostCollectionView(
-        title: LocalizedStringKey(postCollection.title ?? "*Collection*"),
+//        title: LocalizedStringKey(postCollection.title ?? "*Collection*"),
         posts: FetchRequest(
             sortDescriptors: [NSSortDescriptor(key: #keyPath(Post.lastModifyDate), ascending: false)],
             predicate: NSPredicate(format: "ANY %K = %@", #keyPath(Post.collections), postCollection)))

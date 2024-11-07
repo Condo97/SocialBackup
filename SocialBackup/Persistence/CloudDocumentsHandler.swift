@@ -10,7 +10,16 @@ import Foundation
 
 actor CloudDocumentsHandler {
     
+    // Ensure unwrap iCloudContainerURL, otherwise return
+    private var iCloudPostsContainerURL: URL? {
+        FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents/Posts")
+    }
+    
     let coordinator = NSFileCoordinator()
+    
+    func getFullICloudPostsContainerURL(filepath: String) -> URL? {
+        return iCloudPostsContainerURL?.appendingPathComponent(filepath, conformingTo: .url)
+    }
 
     func write(targetURL: URL, data: Data) throws {
         // Ensure the directory exists
@@ -70,6 +79,30 @@ actor CloudDocumentsHandler {
         }
 
         return data
+    }
+    
+    func fileExists(at url: URL) -> Bool {
+        var coordinationError: NSError?
+        var fileExists = false
+
+        coordinator.coordinate(readingItemAt: url, options: [], error: &coordinationError) { coordinatedURL in
+//            var isDirectory: ObjCBool = false
+//            let exists = FileManager.default.fileExists(atPath: coordinatedURL.path, isDirectory: &isDirectory)
+//            if exists && !isDirectory.boolValue {
+//                // Try to read the data to ensure it's not corrupted
+//                if let _ = try? Data(contentsOf: coordinatedURL) {
+//                    fileExists = true
+//                }
+//            }
+            fileExists = FileManager.default.fileExists(atPath: coordinatedURL.path)
+        }
+
+        // If there was an error during coordination, consider that the file does not exist or is inaccessible
+        if coordinationError != nil {
+            return false
+        }
+
+        return fileExists
     }
     
 }

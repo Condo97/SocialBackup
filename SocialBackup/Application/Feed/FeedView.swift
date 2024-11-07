@@ -14,7 +14,9 @@ struct FeedView: View {
     
     var body: some View {
         LazyVGrid(columns: [GridItem(.flexible(), spacing: 0.0), GridItem(.flexible(), spacing: 0.0), GridItem(.flexible(), spacing: 0.0)], spacing: 0.0) {
-            ForEach(0..<(Int(ceil(Double(posts.count) / 5.0))), id: \.self) { postIndex in
+            let groupSize: Int = 5
+            ForEach(0..<(Int(ceil(Double(posts.count) / Double(groupSize)))), id: \.self) { groupedPostIndex in
+                let postIndex = groupedPostIndex * groupSize
                 if postIndex % 2 == 0 {
                     VStack(spacing: 0.0) {
                         FeedPostPreviewButton(

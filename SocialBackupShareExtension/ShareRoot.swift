@@ -12,11 +12,14 @@ struct ShareRoot: View {
     
     var onDismiss: () -> Void
     
+    @StateObject private var postDownloaderAndSaverAndBackuper: PostDownloaderAndSaverAndBackuper = PostDownloaderAndSaverAndBackuper()
+    
     @State private var managedContext: NSManagedObjectContext = CDClient.mainManagedObjectContext
     
     var body: some View {
         ShareView(onDismiss: onDismiss)
             .environment(\.managedObjectContext, managedContext)
+            .environmentObject(postDownloaderAndSaverAndBackuper)
     }
     
 }

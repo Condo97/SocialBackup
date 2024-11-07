@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,39 +16,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jv2-e7-3rw">
-                                <rect key="frame" x="126.33333333333333" y="233" width="140.33333333333337" height="386"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="LogoText" translatesAutoresizingMaskIntoConstraints="NO" id="GSy-3d-Mla">
-                                        <rect key="frame" x="-104.66666666666666" y="0.0" width="350" height="350"/>
-                                        <color key="tintColor" name="Accent"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="350" id="FhC-KV-97x"/>
-                                            <constraint firstAttribute="width" constant="350" id="SgB-b3-P5l"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="StudyAI" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xPW-3q-JOC">
-                                        <rect key="frame" x="0.0" y="334" width="140.33333333333334" height="52"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="38"/>
-                                        <color key="textColor" red="0.80000001190000003" green="0.99215686319999996" blue="0.82745099070000006" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <imageView clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoText" translatesAutoresizingMaskIntoConstraints="NO" id="GSy-3d-Mla">
+                                <rect key="frame" x="21.666666666666657" y="251" width="350" height="350"/>
+                                <color key="tintColor" name="Accent"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="xPW-3q-JOC" secondAttribute="trailing" id="FQj-B3-J3P"/>
-                                    <constraint firstItem="xPW-3q-JOC" firstAttribute="top" secondItem="GSy-3d-Mla" secondAttribute="bottom" constant="-16" id="IIX-9S-3FA"/>
-                                    <constraint firstItem="xPW-3q-JOC" firstAttribute="leading" secondItem="Jv2-e7-3rw" secondAttribute="leading" id="IeO-hy-t1I"/>
-                                    <constraint firstItem="GSy-3d-Mla" firstAttribute="centerX" secondItem="Jv2-e7-3rw" secondAttribute="centerX" id="aFG-A3-k6A"/>
-                                    <constraint firstAttribute="bottom" secondItem="xPW-3q-JOC" secondAttribute="bottom" id="e3E-Fd-3Dt"/>
-                                    <constraint firstItem="GSy-3d-Mla" firstAttribute="top" secondItem="Jv2-e7-3rw" secondAttribute="top" id="tkR-ed-k0e"/>
+                                    <constraint firstAttribute="height" constant="350" id="FhC-KV-97x"/>
+                                    <constraint firstAttribute="width" constant="350" id="SgB-b3-P5l"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="subviews">
-                                        <exclude reference="xPW-3q-JOC"/>
-                                    </mask>
-                                </variation>
-                            </view>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Powered by OpenAI GPT-4o + Vision" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u5b-gT-3tI">
                                 <rect key="frame" x="80.666666666666686" y="798" width="232" height="20"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
@@ -57,11 +32,11 @@
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" name="ElementBackgroundColor"/>
+                        <color key="backgroundColor" name="ForegroundColor"/>
                         <constraints>
                             <constraint firstItem="u5b-gT-3tI" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="3UA-Ly-MNh"/>
-                            <constraint firstItem="Jv2-e7-3rw" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="CzN-cI-d07"/>
-                            <constraint firstItem="Jv2-e7-3rw" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="hgC-KC-EQY"/>
+                            <constraint firstItem="GSy-3d-Mla" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="90a-Yj-Fty"/>
+                            <constraint firstItem="GSy-3d-Mla" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="J3a-0e-RLR"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="u5b-gT-3tI" secondAttribute="bottom" id="kpp-VF-Lfz"/>
                         </constraints>
                     </view>
@@ -76,8 +51,8 @@
         <namedColor name="Accent">
             <color red="1" green="1" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
-        <namedColor name="ElementBackgroundColor">
-            <color red="0.51372549019607838" green="0.47843137254901963" blue="0.61960784313725492" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        <namedColor name="ForegroundColor">
+            <color red="0.24313727021217346" green="0.23921570181846619" blue="0.29803922772407532" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

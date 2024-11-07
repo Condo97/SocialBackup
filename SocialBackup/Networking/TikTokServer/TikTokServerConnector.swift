@@ -55,9 +55,9 @@ class TikTokServerConnector: HTTPSClient {
             body: request,
             headers: nil)
         
-        let checkIfChatRequestsImageRevisionResponse = try JSONDecoder().decode(GetPostInfoResponse.self, from: data)
+        let getPostInfoResponse = try JSONDecoder().decode(GetPostInfoResponse.self, from: data)
         
-        return checkIfChatRequestsImageRevisionResponse
+        return getPostInfoResponse
     }
     
     func structuredOutputRequest<T: Codable>(endpoint: String, request: StructuredOutputRequest) async throws -> StructuredOutputResponse<T> {

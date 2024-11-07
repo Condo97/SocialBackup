@@ -14,6 +14,10 @@ struct PostStatsContainer: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
+    @EnvironmentObject private var postDownloaderAndSaverAndBackuper: PostDownloaderAndSaverAndBackuper
+    
+    @StateObject private var summaryGenerator: SummaryGenerator = SummaryGenerator()
+    
 //    @State private var postInfo: GetPostInfoResponse?
 //    @State private var postTranscriptions: [String] = []
     
@@ -23,6 +27,41 @@ struct PostStatsContainer: View {
     
     @State private var isShowingTranscriptions: Bool = false
     @State private var isShowingUltra: Bool = false
+    
+    private var isShowingSearchCategory: Binding<Bool> { Binding(get: { searchCategory != nil }, set: { if !$0 { searchCategory = nil }}) }
+    @State private var searchCategory: String?
+    private var isShowingSearchEmotion: Binding<Bool> { Binding(get: { searchEmotion != nil }, set: { if !$0 { searchEmotion = nil }}) }
+    @State private var searchEmotion: String?
+    private var isShowingSearchTag: Binding<Bool> { Binding(get: { searchTag != nil }, set: { if !$0 { searchTag = nil }}) }
+    @State private var searchTag: String?
+    private var isShowingSearchKeyword: Binding<Bool> { Binding(get: { searchKeyword != nil }, set: { if !$0 { searchKeyword = nil }}) }
+    @State private var searchKeyword: String?
+    
+    private var searchCategoryFetchRequest: FetchRequest<Post> {
+        FetchRequest(
+            sortDescriptors: [NSSortDescriptor(key: #keyPath(Post.lastModifyDate), ascending: false)],
+            predicate: NSPredicate(format: "%K CONTAINS[cd] %@", #keyPath(Post.generatedCategoriesCSV), searchCategory ?? ""))
+    }
+    
+    private var searchEmotionFetchRequest: FetchRequest<Post> {
+        FetchRequest(
+            sortDescriptors: [NSSortDescriptor(key: #keyPath(Post.lastModifyDate), ascending: false)],
+            predicate: NSPredicate(format: "%K CONTAINS[cd] %@", #keyPath(Post.generatedEmotionsCSV), searchEmotion ?? ""))
+    }
+    
+    private var searchTagFetchRequest: FetchRequest<Post> {
+        FetchRequest(
+            sortDescriptors: [NSSortDescriptor(key: #keyPath(Post.lastModifyDate), ascending: false)],
+            predicate: NSPredicate(format: "%K CONTAINS[cd] %@", #keyPath(Post.generatedTagsCSV), searchTag ?? ""))
+    }
+    
+    private var searchKeywordFetchRequest: FetchRequest<Post> {
+        FetchRequest(
+            sortDescriptors: [NSSortDescriptor(key: #keyPath(Post.lastModifyDate), ascending: false)],
+            predicate: NSPredicate(format: "%K CONTAINS[cd] %@ OR %K CONTAINS[cd] %@",
+                                   #keyPath(Post.generatedKeywordsCSV), searchKeyword ?? "",
+                                   #keyPath(Post.generatedKeyEntitiesCSV), searchKeyword ?? ""))
+    }
     
     var body: some View {
         Group {
@@ -34,8 +73,20 @@ struct PostStatsContainer: View {
                         predicate: NSPredicate(format: "%K = %@", #keyPath(Media.post), post)),
                     isLoadingSummary: $isLoadingSummary,
                     onAddToCollection: onAddToCollection,
-                    onGenerateSummary: { Task { await generateSummary() }},
-                    onOpenTranscriptionsView: { isShowingTranscriptions = true })
+                    onGenerateSummary: { Task { await generateSummary(showUltraOnFail: true) }},
+                    onOpenTranscriptionsView: { isShowingTranscriptions = true },
+                    onSelectCategory: { category in
+                        searchCategory = category
+                    },
+                    onSelectEmotion: { emotion in
+                        searchEmotion = emotion
+                    },
+                    onSelectTag: { tag in
+                        searchTag = tag
+                    },
+                    onSelectKeyword: { keyword in
+                        searchKeyword = keyword
+                    })
             } else if isLoading {
                 VStack {
                     Text("Loading...")
@@ -60,6 +111,22 @@ struct PostStatsContainer: View {
                     .background(Colors.background)
             }
         }
+        .searchPopup(
+            title: searchCategory ?? "Searching Categories",
+            posts: searchCategoryFetchRequest,
+            isPresented: isShowingSearchCategory)
+        .searchPopup(
+            title: searchEmotion ?? "Searching Emotions",
+            posts: searchEmotionFetchRequest,
+            isPresented: isShowingSearchEmotion)
+        .searchPopup(
+            title: searchTag ?? "Searching Tags",
+            posts: searchTagFetchRequest,
+            isPresented: isShowingSearchTag)
+        .searchPopup(
+            title: searchKeyword ?? "Searching Keywords",
+            posts: searchKeywordFetchRequest,
+            isPresented: isShowingSearchKeyword)
         .ultraViewPopover(isPresented: $isShowingUltra)
 //        .onAppear {
 //            do {
@@ -73,7 +140,7 @@ struct PostStatsContainer: View {
         .task {
             // Update missing transcriptions just so that in case there is one that is missing lol
             do {
-                try await PostDownloaderAndSaverAndBackuper().updateMissingTranscriptions(for: post, in: viewContext)
+                try await postDownloaderAndSaverAndBackuper.updateMissingTranscriptions(for: post, in: viewContext)
 //                checkForAndUpdateTranscriptions()
             } catch {
                 // TODO: Handle Errors
@@ -81,61 +148,24 @@ struct PostStatsContainer: View {
             }
         }
         .task {
-            await generateSummary()
+            await generateSummary(showUltraOnFail: false)
         }
     }
     
-    func generateSummary() async {
-        guard PremiumUpdater.get() else {
-            // Show ultra view
-            isShowingUltra = true
-            return
-        }
-        
-        defer { DispatchQueue.main.async { self.isLoadingSummary = false } }
-        await MainActor.run { self.isLoadingSummary = true }
-        
-//            if PremiumUpdater.get() { TODO: Enable Premium Check
-            // Ensure authToken
-            let authToken: String
-            do {
-                authToken = try await AuthHelper.ensure()
-            } catch {
-                // TODO: Handle Errors
-                print("Error ensuring authToken in PostDownloaderView... \(error)")
-                return
-            }
-            
-            // Update post videoSummary if any generated field is nil
-        if post.generatedFieldIsNil {
-                do {
-                    try await PostPersistenceManager.getAndSavePostSummary(
-                        authToken: authToken,
-                        to: post,
-                        in: viewContext)
-                } catch PostPersistenceManagerError.noTranscription {
-                    // Transcribe again TODO: Is this good enough, because what if one of the content's transcriptions is missing? There should be an automatic refresh or check
-                    print("No transcriptions received")
-                    do {
-                        try await PostDownloaderAndSaverAndBackuper().updateMissingTranscriptions(for: post, in: viewContext)
-                    } catch {
-                        // TODO: Handle Errors
-                        print("Error updating missing transcriptions in PostStatsContainer... \(error)")
-                    }
-                } catch {
-                    // TODO: Handle Errors
-                    print("Error getting and saving post summary in PostDownloaderAndSaverAndBackuper... \(error)")
+    func generateSummary(showUltraOnFail: Bool) async {
+        do {
+            try await summaryGenerator.generateSummary(for: post, in: viewContext)
+        } catch SummaryGeneratorError.subscriptionNotAuthorized {
+            if showUltraOnFail {
+                // Show ultra view
+                await MainActor.run {
+                    isShowingUltra = true
                 }
             }
-        
-//            // Set postSummary and postTranscriptions
-//            do {
-//                checkForAndUpdateTranscriptions()
-//            } catch {
-//                // TODO: Handle Errors
-//                print("Error getting post summary object in PostStatsContainer... \(error)")
-//            }
-//            }
+        } catch {
+            // TODO: Handle Errors
+            print("Error generating summary in PostStatsContainer... \(error)")
+        }
     }
     
 //    func checkForAndUpdateTranscriptions() {

@@ -34,6 +34,7 @@ struct PostDownloaderView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @EnvironmentObject private var mediaICloudUploadUpdater: MediaICloudUploadUpdater
+    @EnvironmentObject private var postDownloaderAndSaverAndBackuper: PostDownloaderAndSaverAndBackuper
     
 //    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Post.lastModifyDate, ascending: false)])
 //    private var recentPosts: FetchedResults<Post>
@@ -58,7 +59,7 @@ struct PostDownloaderView: View {
                     PostDownloadMiniContainer(
                         isLoading: $queuedTikTokDownloader.isProcessing,
                         onSubmit: { urlString in
-                            queuedTikTokDownloader.enqueue(urlString: urlString)
+                            QueuedTikTokDownloader.enqueue(urlString: urlString)
                             Task {
                                 await startQueue()
                             }
@@ -134,7 +135,9 @@ struct PostDownloaderView: View {
             .toolbar {
                 LogoToolbarItem()
                 
-                UltraToolbarItem(isShowingUltraView: $isShowingUltraView)
+                if !PremiumUpdater.get() {
+                    UltraToolbarItem(isShowingUltraView: $isShowingUltraView)
+                }
             }
             .postContainer(post: $presentingPost)
         }
@@ -177,6 +180,7 @@ struct PostDownloaderView: View {
         
         queuedTikTokDownloader.startProcessingQueue(
             authToken: authToken,
+            postDownloaderAndSaverAndBackuper: postDownloaderAndSaverAndBackuper,
             mediaICloudUploadUpdater: mediaICloudUploadUpdater,
             managedContext: viewContext)
     }

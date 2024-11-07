@@ -51,18 +51,26 @@ struct FeedContainer: View {
     
     var body: some View {
         ZStack {
-            ScrollView {
+            VStack {
                 Spacer(minLength: 130.0 + (selectedFilterWords.count == 0 ? 0 : 50.0))
-                FeedView(
-                    posts: FetchRequest(
-                        sortDescriptors: [NSSortDescriptor(key: #keyPath(Post.lastModifyDate), ascending: false)],
-                        predicate: postFilterPredicate),
-                    onSelectPost: { post in
-                        withAnimation {
-                            presentingPost = post
+                ScrollView {
+                    FeedView(
+                        posts: FetchRequest(
+                            sortDescriptors: [NSSortDescriptor(key: #keyPath(Post.lastModifyDate), ascending: false)],
+                            predicate: postFilterPredicate),
+                        onSelectPost: { post in
+                            withAnimation {
+                                presentingPost = post
+                            }
                         }
-                    }
-                )
+                    )
+                }
+//                .refreshable {
+//                    try! await Task.sleep(for: .seconds(5))
+//                    await MainActor.run {
+//                        viewContext.refreshAllObjects()
+//                    }
+//                }
             }
         }
         .ignoresSafeArea()
@@ -94,6 +102,14 @@ struct FeedContainer: View {
                                 TextField("", text: $searchText, prompt: Text("Search Posts").foregroundColor(Colors.text.opacity(0.6)))
                                     .focused($searchFocused)
                                     .padding(.vertical)
+                                if !searchText.isEmpty {
+                                    Button(action: { searchText = "" }) {
+                                        Image(systemName: "xmark")
+                                            .imageScale(.small)
+                                            .foregroundStyle(Colors.text)
+                                            .opacity(0.6)
+                                    }
+                                }
                             }
                             .padding(.horizontal)
                             
@@ -102,7 +118,7 @@ struct FeedContainer: View {
                                     HStack {
                                         ForEach(selectedFilterWords, id: \.self) { word in
                                             Button(action: { selectedFilterWords.removeAll(where: { $0 == word })}) {
-                                                Text("\(word)\(Image(systemName: "xmark"))")
+                                                Text("\(word) \(Image(systemName: "xmark"))")
                                                     .font(.custom(Constants.FontName.body, size: 12.0))
                                                     .foregroundStyle(Colors.text)
                                                     .padding(.horizontal, 8)
@@ -145,7 +161,9 @@ struct FeedContainer: View {
                 .zIndex(2)
                 
                 if isDisplayingAdvancedSearch {
-                    FeedSearchFilterView(selectedFilterWords: $selectedFilterWords)
+                    FeedSearchFilterView(
+                        filterText: $searchText,
+                        selectedFilterWords: $selectedFilterWords)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding()
                     .background(Colors.background)
@@ -155,9 +173,13 @@ struct FeedContainer: View {
 //                        .animation(.easeInOut, value: searchFocused || !searchText.isEmpty)
                 }
             }
+            .background(isDisplayingAdvancedSearch ? Color.clear : Colors.background)
         }
         .scrollDismissesKeyboard(.immediately)
         .postContainer(post: $presentingPost)
+//        .onAppear {
+//            UIRefreshControl.appearance().tintColor = .white // Tint for pull down to refresh
+//        }
         .onChange(of: searchFocused) { newValue in
             if newValue {
                 withAnimation {

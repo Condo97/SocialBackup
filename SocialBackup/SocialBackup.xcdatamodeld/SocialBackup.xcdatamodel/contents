@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23231" systemVersion="24A335" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23507" systemVersion="24A335" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Media" representedClassName="Media" syncable="YES" codeGenerationType="class">
+        <attribute name="externalURL" optional="YES" attributeType="URI"/>
         <attribute name="iCloudFilename" optional="YES" attributeType="String"/>
         <attribute name="index" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="localFilename" optional="YES" attributeType="String"/>
@@ -9,6 +10,9 @@
         <relationship name="post" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Post" inverseName="medias" inverseEntity="Post"/>
     </entity>
     <entity name="Post" representedClassName="Post" syncable="YES" codeGenerationType="class">
+        <attribute name="cachedSource" optional="YES" attributeType="String"/>
+        <attribute name="extractedUsername" optional="YES" attributeType="String"/>
+        <attribute name="generatedCategoriesCSV" optional="YES" attributeType="String"/>
         <attribute name="generatedEmotionsCSV" optional="YES" attributeType="String"/>
         <attribute name="generatedKeyEntitiesCSV" optional="YES" attributeType="String"/>
         <attribute name="generatedKeywordsCSV" optional="YES" attributeType="String"/>
@@ -19,6 +23,7 @@
         <attribute name="generatedTopic" optional="YES" attributeType="String"/>
         <attribute name="getPostInfoResponse" optional="YES" attributeType="Binary"/>
         <attribute name="lastModifyDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="originalURL" optional="YES" attributeType="String"/>
         <attribute name="saveDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="subdirectory" optional="YES" attributeType="String"/>
         <attribute name="thumbnail" optional="YES" attributeType="Binary"/>

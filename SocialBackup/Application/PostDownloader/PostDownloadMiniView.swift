@@ -20,7 +20,7 @@ struct PostDownloadMiniView: View {
         VStack {
             HStack {
                 Image(systemName: "magnifyingglass")
-                TextField("Enter Post URL...", text: $text)
+                TextField("", text: $text, prompt: Text("Enter Post URL...").foregroundColor(Colors.text.opacity(0.6)))
                     .disabled(isLoading)
                 Button(action: {
                     if let pasteboardText = PasteboardHelper.paste() {

@@ -18,6 +18,10 @@ struct PostStatsView: View {
     var onAddToCollection: () -> Void
     var onGenerateSummary: () -> Void
     var onOpenTranscriptionsView: () -> Void
+    var onSelectCategory: (_ category: String) -> Void
+    var onSelectEmotion: (_ emotion: String) -> Void
+    var onSelectTag: (_ tag: String) -> Void
+    var onSelectKeyword: (_ keyword: String) -> Void
     
     @Environment(\.openURL) private var openURL
     @Environment(\.managedObjectContext) private var viewContext
@@ -64,10 +68,14 @@ struct PostStatsView: View {
                                 
                             }
                         
-                        // Author Name
+                        // Author Name and username
                         VStack(alignment: .leading) {
                             Text(author)
                                 .font(.custom(Constants.FontName.heavy, size: 17.0))
+                            if let extractedUsername = post.extractedUsername {
+                                Text(extractedUsername)
+                                    .font(.custom(Constants.FontName.body, size: 12.0))
+                            }
                         }
                         
                         Spacer()
@@ -167,7 +175,16 @@ struct PostStatsView: View {
                 
                 // Post Duration
                 if let duration = postInfo?.body.downloadResponse.duration {
-                    StatisticView(iconName: "clock.fill", value: formatDuration(duration))
+                    if let sourceString = postInfo?.body.downloadResponse.source {
+                        let source = PostSource.from(sourceString)
+                        if source == .tiktok {
+                            StatisticView(iconName: "clock.fill", value: formatDuration(duration / 1000)) // Divide by 1000 bc tiktok is in ms for some reason TODO: Better solution, for like if this changes so that the unit can be calculated before its display
+                        } else {
+                            StatisticView(iconName: "clock.fill", value: formatDuration(duration))
+                        }
+                    } else {
+                        StatisticView(iconName: "clock.fill", value: formatDuration(duration))
+                    }
                 }
                 
                 // Source and Original URL
@@ -225,6 +242,35 @@ struct PostStatsView: View {
                     }
                 }
                 
+                // TODO: Post Categories
+                if let categories = post.generatedCategoriesCSV?.split(separator: ",") {
+                    VStack(alignment: .leading, spacing: 8.0) {
+                        Text("Categories:")
+                            .font(.custom(Constants.FontName.heavy, size: 10.0))
+                        SingleAxisGeometryReader(axis: .horizontal) { geo in
+                            HStack {
+                                FlexibleView(
+                                    availableWidth: geo.magnitude,
+                                    data: categories,
+                                    spacing: 8.0,
+                                    alignment: .leading,
+                                    content: { category in
+                                        Button(action: { onSelectCategory(String(category)) }) {
+                                            Text(category)
+                                                .font(.custom(Constants.FontName.body, size: 14.0))
+                                                .foregroundStyle(Colors.text)
+                                                .padding(.horizontal)
+                                                .padding(.vertical, 8)
+                                                .background(Colors.foreground)
+                                                .clipShape(RoundedRectangle(cornerRadius: 14.0))
+                                        }
+                                    })
+                                Spacer()
+                            }
+                        }
+                    }
+                }
+                
                 // Post Emotions
                 if let emotions = post.generatedEmotionsCSV?.split(separator: ",") {
                     VStack(alignment: .leading, spacing: 8.0) {
@@ -238,13 +284,15 @@ struct PostStatsView: View {
                                     spacing: 8.0,
                                     alignment: .leading,
                                     content: { emotion in
-                                        Text(emotion)
-                                            .font(.custom(Constants.FontName.body, size: 14.0))
-                                            .foregroundStyle(Colors.text)
-                                            .padding(.horizontal)
-                                            .padding(.vertical, 8)
-                                            .background(Colors.foreground)
-                                            .clipShape(RoundedRectangle(cornerRadius: 14.0))
+                                        Button(action: { onSelectEmotion(String(emotion)) }) {
+                                            Text(emotion)
+                                                .font(.custom(Constants.FontName.body, size: 14.0))
+                                                .foregroundStyle(Colors.text)
+                                                .padding(.horizontal)
+                                                .padding(.vertical, 8)
+                                                .background(Colors.foreground)
+                                                .clipShape(RoundedRectangle(cornerRadius: 14.0))
+                                        }
                                     })
                                 Spacer()
                             }
@@ -265,13 +313,15 @@ struct PostStatsView: View {
                                     spacing: 8.0,
                                     alignment: .leading,
                                     content: { tag in
-                                        Text(tag)
-                                            .font(.custom(Constants.FontName.body, size: 14.0))
-                                            .foregroundStyle(Colors.text)
-                                            .padding(.horizontal)
-                                            .padding(.vertical, 8)
-                                            .background(Colors.foreground)
-                                            .clipShape(RoundedRectangle(cornerRadius: 14.0))
+                                        Button(action: { onSelectTag(String(tag)) }) {
+                                            Text(tag)
+                                                .font(.custom(Constants.FontName.body, size: 14.0))
+                                                .foregroundStyle(Colors.text)
+                                                .padding(.horizontal)
+                                                .padding(.vertical, 8)
+                                                .background(Colors.foreground)
+                                                .clipShape(RoundedRectangle(cornerRadius: 14.0))
+                                        }
                                     })
                                 Spacer()
                             }
@@ -294,13 +344,15 @@ struct PostStatsView: View {
                                     spacing: 8.0,
                                     alignment: .leading,
                                     content: { key in
-                                        Text(key)
-                                            .font(.custom(Constants.FontName.body, size: 14.0))
-                                            .foregroundStyle(Colors.text)
-                                            .padding(.horizontal)
-                                            .padding(.vertical, 8)
-                                            .background(Colors.foreground)
-                                            .clipShape(RoundedRectangle(cornerRadius: 14.0))
+                                        Button(action: { onSelectKeyword(String(key)) }) {
+                                            Text(key)
+                                                .font(.custom(Constants.FontName.body, size: 14.0))
+                                                .foregroundStyle(Colors.text)
+                                                .padding(.horizontal)
+                                                .padding(.vertical, 8)
+                                                .background(Colors.foreground)
+                                                .clipShape(RoundedRectangle(cornerRadius: 14.0))
+                                        }
                                     })
                                 Spacer()
                             }
@@ -376,6 +428,7 @@ struct PostStatsView_Previews: PreviewProvider {
             shortSummary: "This is the short summary",
             mediumSummary: "This is the medium summary",
             emotions: ["Happy", "Sad", "Neutral", "Happy", "Sad", "Neutral", "Happy", "Sad", "Neutral"],
+            categories: ["First category", "second category", "THIRD category"],
             tags: ["Dogs", "Cats"],
             keywords: ["one keyword", "another", "keyword"],
             keyEntities: ["Barb", "Crab", "Deer", "Eeee", "Frank"])
@@ -404,10 +457,14 @@ struct PostStatsView_Previews: PreviewProvider {
             post: post,
 //            postInfo: postInfo,
             medias: FetchRequest(sortDescriptors: [NSSortDescriptor(key: #keyPath(Media.index), ascending: true)], predicate: NSPredicate(format: "%K = %@", #keyPath(Media.post), post)),
-        isLoadingSummary: .constant(false),
-        onAddToCollection: {},
-        onGenerateSummary: {},
-        onOpenTranscriptionsView: {})
+            isLoadingSummary: .constant(false),
+            onAddToCollection: {},
+            onGenerateSummary: {},
+            onOpenTranscriptionsView: {},
+            onSelectCategory: { _ in },
+            onSelectEmotion: { _ in },
+            onSelectTag: { _ in },
+            onSelectKeyword: { _ in })
             .background(Colors.background)
     }
 }

@@ -26,6 +26,7 @@ struct AddToPostCollectionView: View {
             VStack(alignment: .leading) {
                 Text("Save post to a new or existing collection.")
                     .font(.custom(Constants.FontName.body, size: 17.0))
+                    .foregroundStyle(Colors.text)
                 Button(action: {
                     isShowingCreateCollection = true
                 }) {
@@ -34,7 +35,7 @@ struct AddToPostCollectionView: View {
                         .overlay {
                             HStack {
                                 Spacer()
-                                Image(systemName: "chevron.right")
+                                Image(systemName: "plus")
                             }
                         }
                         .appButtonStyle()
@@ -42,6 +43,7 @@ struct AddToPostCollectionView: View {
                 
                 Text("All Collections")
                     .font(.custom(Constants.FontName.heavy, size: 20.0))
+                    .foregroundStyle(Colors.text)
                     .padding(.top)
                 ForEach(postCollections) { postCollection in
                     Button(action: {
@@ -72,6 +74,7 @@ struct AddToPostCollectionView: View {
                                 HStack {
                                     if let modifyDate = postCollection.lastModifyDate {
                                         Text("\(Image(systemName: "calendar"))")
+                                            .font(.custom(Constants.FontName.light, size: 12.0))
                                         Text(DefaultDateFormatter.defaultDateFormatter.string(from: modifyDate))
                                             .font(.custom(Constants.FontName.body, size: 14.0))
                                     }
@@ -92,7 +95,11 @@ struct AddToPostCollectionView: View {
                             Image(systemName: "chevron.right")
                                 .font(.custom(Constants.FontName.body, size: 17.0))
                         }
-                        .appButtonStyle(foregroundColor: Colors.text, backgroundColor: Colors.foreground)
+//                        .appButtonStyle(foregroundColor: Colors.text, backgroundColor: Colors.foreground)
+                        .foregroundStyle(Colors.text)
+                        .padding()
+                        .background(Colors.foreground)
+                        .clipShape(RoundedRectangle(cornerRadius: 14.0))
                     }
                 }
             }

@@ -112,7 +112,7 @@ struct UltraView: View {
                 .overlay(alignment: .bottom) {
                     VStack {
                         topImagesAndPromoText
-                            .padding(.top, 26)
+//                            .padding(.top, 26)
                             .padding(.bottom, 4)
                         
                         ScrollView {
@@ -237,7 +237,7 @@ struct UltraView: View {
             
             Spacer()
             
-            VStack(alignment: .leading) {
+            VStack(alignment: .center, spacing: 0.0) {
                 Image(Images.logoText)
 //                    .font(.custom(Constants.FontName.black, size: 28.0))
                     .resizable()
@@ -256,20 +256,25 @@ struct UltraView: View {
 //                    .font(.custom(Constants.FontName.light, size: 17.0))
 //                    .minimumScaleFactor(0.5)
 //                    .lineLimit(2)
+                
+                Text("save posts forever")
+                    .font(.custom(Constants.FontName.heavy, size: 28.0))
+                    .foregroundStyle(Colors.elementBackgroundColor)
+                
             }
             .foregroundStyle(colorScheme == .dark ? Colors.elementBackgroundColor : Colors.text)
-            .frame(height: 60.0)
+            .frame(height: 120.0)
             .padding(.leading, -8)
             .padding(.trailing, 8)
             
             Spacer()
         }
         .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 28.0)
-                .fill(Colors.foreground)
-        )
-        .padding([.leading, .trailing])
+//        .background(
+//            RoundedRectangle(cornerRadius: 28.0)
+//                .fill(Colors.foreground)
+//        )
+//        .padding([.leading, .trailing])
 //        VStack(spacing: 0.0) {
 //            Image(colorScheme == .dark ? Constants.ImageName.Ultra.ultraDark : Constants.ImageName.Ultra.ultraLight)
 //                .resizable()
@@ -286,6 +291,12 @@ struct UltraView: View {
     
     var featuresList: some View {
         VStack(alignment: .leading, spacing: 8.0) {
+            // Save any post
+            // in-app
+            // Unlimited grabs
+            // iCloud sync
+            // Remove Ads
+            
             // GPT-4 + Vision + Web
             Button(action: {
                 HapticHelper.doLightHaptic()
@@ -298,19 +309,23 @@ struct UltraView: View {
                     }
                 }
             }) {
+                // Save Any Post
+                //
+                // Unlimited Grabs
+                //
                 HStack(alignment: showingPromoRows.contains(.gptVision) ? .top : .center) {
-                    Text(Image(systemName: "eye.fill"))
-                        .font(.custom(Constants.FontName.body, size: 20.0))
+                    Text(Image(systemName: "heart"))
+                        .font(.custom(Constants.FontName.body, size: 28.0))
                     
                     VStack(alignment: .leading) {
-                        Text("AI Search")
+                        Text("Save Any Post")
                             .font(.custom(Constants.FontName.black, size: 17.0))
-                        +
-                        Text(" *NEW!*")
-                            .font(.custom(Constants.FontName.body, size: 17.0))
+//                        +
+//                        Text(" *NEW!*")
+//                            .font(.custom(Constants.FontName.body, size: 17.0))
                         
                         if showingPromoRows.contains(.gptVision) {
-                            Text("Search ")
+                            Text("GRAB any post. Watch videos and images even after they are taken down.")
                                 .font(.custom(Constants.FontName.lightOblique, size: 14.0))
                                 .multilineTextAlignment(.leading)
                                 .opacity(0.6)
@@ -351,29 +366,33 @@ struct UltraView: View {
                 }
             }) {
                 HStack(alignment: showingPromoRows.contains(.assistants) ? .top : .center) {
-                    if #available(iOS 17.0, *) {
-                        Text(Image(systemName: "brain.fill"))
-                            .font(.custom(Constants.FontName.body, size: 20.0))
-                    } else {
-                        Text(Image(systemName: "brain"))
-                            .font(.custom(Constants.FontName.body, size: 20.0))
-                    }
+                    Text(Image(systemName: "square.and.arrow.up"))
+                        .font(.custom(Constants.FontName.body, size: 28.0))
                     
                     VStack(alignment: .leading) {
-                        Text("Add")
+                        Text("GRAB from")
                             .font(.custom(Constants.FontName.body, size: 17.0))
                         +
-                        Text(" Websites, PDFs & More")
+                        Text(" Apps")
                             .font(.custom(Constants.FontName.black, size: 17.0))
                         
                         if showingPromoRows.contains(.assistants) {
-                            Text("Chat about a source to learn your way. Ask questions about a lecture. Solve difficult problems. Write better essays.")
+                            Text("Share to GRAB to instantly backup any post.")
                                 .font(.custom(Constants.FontName.lightOblique, size: 14.0))
                                 .multilineTextAlignment(.leading)
                                 .opacity(0.6)
                                 .transition(.opacity)
                                 .fixedSize(horizontal: false, vertical: true)
+                            
+//                            Button(action: {
+//                                // TODO: Implement
+//                            }) {
+//                                Text("How-To?")
+//                                    .font(.custom(Constants.FontName.heavy, size: 14.0))
+//                                    .foregroundStyle(Colors.elementBackgroundColor)
+//                            }
                         }
+                        
                     }
                     
                     Spacer(minLength: 0.0)
@@ -402,24 +421,19 @@ struct UltraView: View {
                 }
             }) {
                 HStack(alignment: showingPromoRows.contains(.unlimitedMessages) ? .top : .center) {
-                    ZStack {
-                        Text(Image(systemName: "bubble.left.fill"))
-                            .font(.custom(Constants.FontName.body, size: 24.0))
-                        Text(Image(systemName: "infinity"))
-                            .font(.custom(Constants.FontName.medium, size: 12.0))
-                            .foregroundStyle(Colors.background)
-                            .padding(.top, -4.4)
-                    }
+                    Text(Image(systemName: "infinity"))
+                        .font(.custom(Constants.FontName.medium, size: 28.0))
+                        .foregroundStyle(Colors.text)
                     
                     VStack(alignment: .leading) {
                         Text("Unlimited")
                             .font(.custom(Constants.FontName.black, size: 17.0))
                         +
-                        Text(" Chats")
+                        Text(" Grabs")
                             .font(.custom(Constants.FontName.body, size: 17.0))
                         
                         if showingPromoRows.contains(.unlimitedMessages) {
-                            Text("Limitless chats, images, websites, PDFs, voice, videos & more. Ask follow up questions. Dive deep into any subject.")
+                            Text("Save any amount of posts, without any limit. Will not be deleted if you cancel.")
                                 .font(.custom(Constants.FontName.lightOblique, size: 14.0))
                                 .multilineTextAlignment(.leading)
                                 .opacity(0.6)
@@ -454,18 +468,18 @@ struct UltraView: View {
                 }
             }) {
                 HStack(alignment: showingPromoRows.contains(.gptIntelligence) ? .top : .center) {
-                    Text(Image(systemName: "calendar"))
-                        .font(.custom(Constants.FontName.body, size: 24.0))
+                    Text(Image(systemName: "brain"))
+                        .font(.custom(Constants.FontName.body, size: 25.0))
                     
                     VStack(alignment: .leading) {
-                        Text("2024")
+                        Text("AI")
                             .font(.custom(Constants.FontName.black, size: 17.0))
                         +
-                        Text(" AI Intelligence + Web")
+                        Text(" Organization & Search")
                             .font(.custom(Constants.FontName.body, size: 17.0))
                         
                         if showingPromoRows.contains(.gptIntelligence) {
-                            Text("Trained on books, research, websites and more. Updated for 2024.\n**NEW!** Ask to search the internet, for even fresher sources.")
+                            Text("Easily find the posts you want with AI deep search. Read an AI generated summary for each post.")
                                 .font(.custom(Constants.FontName.lightOblique, size: 14.0))
                                 .multilineTextAlignment(.leading)
                                 .opacity(0.6)
@@ -502,14 +516,14 @@ struct UltraView: View {
             }) {
                 HStack(alignment: showingPromoRows.contains(.removeAds) ? .top : .center) {
                     ZStack {
-                        Text(Image(systemName: "circle.slash.fill"))
-                            .font(.custom(Constants.FontName.body, size: 24.0))
+                        Text(Image(systemName: "circle.slash"))
+                            .font(.custom(Constants.FontName.body, size: 28.0))
                         Text("ADs")
                             .font(.custom(Constants.FontName.black, size: 10.0))
                             .padding(.top, -2)
-                            .foregroundStyle(Colors.background)
+                            .foregroundStyle(Colors.text)
                         Text(Image(systemName: "circle.slash"))
-                            .font(.custom(Constants.FontName.body, size: 24.0))
+                            .font(.custom(Constants.FontName.body, size: 28.0))
                     }
                     
                     VStack(alignment: .leading) {
@@ -581,6 +595,7 @@ struct UltraView: View {
                 .font(.custom(Constants.FontName.bodyOblique, size: 12.0))
                 .padding(.bottom, -6)
                 .opacity(0.6)
+                .foregroundStyle(Colors.text)
             
             Button(action: {
                 // Do light haptic
@@ -638,7 +653,7 @@ struct UltraView: View {
                             
                             Text(Image(systemName: selectedSubscription == .weekly ? "checkmark.circle.fill" : "circle"))
                                 .font(.custom(Constants.FontName.body, size: 28.0))
-                                .foregroundStyle(Colors.accent)
+                                .foregroundStyle(Colors.text)
                                 .padding([.top, .bottom], -6)
                         }
                     } else {
@@ -696,7 +711,7 @@ struct UltraView: View {
                             
                             Text(Image(systemName: selectedSubscription == .monthly ? "checkmark.circle.fill" : "circle"))
                                 .font(.custom(Constants.FontName.body, size: 28.0))
-                                .foregroundStyle(Colors.accent)
+                                .foregroundStyle(Colors.text)
                                 .padding([.top, .bottom], -6)
                         }
                         
@@ -762,7 +777,7 @@ struct UltraView: View {
             }
             .padding(18)
             .foregroundStyle(Colors.text)
-            .background(Colors.foreground)
+            .background(Colors.elementBackgroundColor)
             .clipShape(RoundedRectangle(cornerRadius: 14.0))
             .opacity(isLoadingPurchase ? 0.4 : 1.0)
             .disabled(isLoadingPurchase)
@@ -809,7 +824,7 @@ struct UltraView: View {
                     .font(.custom(Constants.FontName.body, size: 12.0))
             }
         }
-        .foregroundStyle(Colors.textOnBackgroundColor)
+        .foregroundStyle(Colors.text)
         .opacity(0.8)
     }
     

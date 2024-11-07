@@ -13,7 +13,6 @@ class QueuedTikTokDownloader: ObservableObject {
     @Published var recentlyDownloadedPosts: [Post] = []
     @Published var isProcessing: Bool = false
     
-    private let downloader = PostDownloaderAndSaverAndBackuper()
     private static let appGroupUserDefaults = UserDefaults(suiteName: Constants.Additional.appGroupName)
     private static let queueKey = "downloadQueue"
     
@@ -40,7 +39,7 @@ class QueuedTikTokDownloader: ObservableObject {
     }
     
     // Starts processing the queue if not already processing
-    func startProcessingQueue(authToken: String, mediaICloudUploadUpdater: MediaICloudUploadUpdater, managedContext: NSManagedObjectContext) {
+    func startProcessingQueue(authToken: String, postDownloaderAndSaverAndBackuper: PostDownloaderAndSaverAndBackuper, mediaICloudUploadUpdater: MediaICloudUploadUpdater, managedContext: NSManagedObjectContext) {
         guard !QueuedTikTokDownloader.queue.isEmpty else {
             return
         }
@@ -49,11 +48,11 @@ class QueuedTikTokDownloader: ObservableObject {
         DispatchQueue.main.async {
             self.isProcessing = true
         }
-        processNext(authToken: authToken, mediaICloudUploadUpdater: mediaICloudUploadUpdater, managedContext: managedContext)
+        processNext(authToken: authToken, postDownloaderAndSaverAndBackuper: postDownloaderAndSaverAndBackuper, mediaICloudUploadUpdater: mediaICloudUploadUpdater, managedContext: managedContext)
     }
     
     // Processes the next URL in the queue
-    private func processNext(authToken: String, mediaICloudUploadUpdater: MediaICloudUploadUpdater, managedContext: NSManagedObjectContext) {
+    private func processNext(authToken: String, postDownloaderAndSaverAndBackuper: PostDownloaderAndSaverAndBackuper, mediaICloudUploadUpdater: MediaICloudUploadUpdater, managedContext: NSManagedObjectContext) {
         guard !QueuedTikTokDownloader.queue.isEmpty else {
             DispatchQueue.main.async {
                 self.isProcessing = false
@@ -61,13 +60,13 @@ class QueuedTikTokDownloader: ObservableObject {
             return
         }
         
-        let urlString = QueuedTikTokDownloader.queue.first!
+        let urlString = QueuedTikTokDownloader.queue.removeFirst()
         
         Task {
             do {
                 // Perform the download operation
-                let post = try await downloader.downloadAndSave(
-                    fromURLString: urlString,
+                let post = try await postDownloaderAndSaverAndBackuper.createAndDownload(
+                    urlString: urlString,
                     authToken: authToken,
                     mediaICloudUploadUpdater: mediaICloudUploadUpdater,
                     in: managedContext
@@ -84,14 +83,15 @@ class QueuedTikTokDownloader: ObservableObject {
                 print("Error downloading and saving post in QueuedTikTokDownloader... \(error)")
             }
             
-            // Remove the URL from the queue
-            var currentQueue = QueuedTikTokDownloader.queue
-            currentQueue.removeFirst()
-            QueuedTikTokDownloader.queue = currentQueue
+//            // Remove the URL from the queue
+//            var currentQueue = QueuedTikTokDownloader.queue
+//            currentQueue.removeFirst()
+//            QueuedTikTokDownloader.queue = currentQueue
             
             // Continue with the next URL
-            processNext(authToken: authToken, mediaICloudUploadUpdater: mediaICloudUploadUpdater, managedContext: managedContext)
+            processNext(authToken: authToken, postDownloaderAndSaverAndBackuper: postDownloaderAndSaverAndBackuper, mediaICloudUploadUpdater: mediaICloudUploadUpdater, managedContext: managedContext)
         }
     }
     
 }
+

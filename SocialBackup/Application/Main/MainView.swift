@@ -40,7 +40,7 @@ struct MainView: View {
 //        }
         TabView(selection: $selectedTab) {
             Group {
-                FeedContainer()
+                SearchView()
                     .tag(Tabs.home)
                 
                 PostDownloaderView()
@@ -63,7 +63,7 @@ struct MainView: View {
                             selectedTab = .home
                         }
                     }) {
-                        Image(systemName: "house")
+                        Image(systemName: "magnifyingglass")
                             .tabButtonStyle(
                                 isSelected: selectedTab == .home,
                                 backSelectedCircleBackgroundColor: Colors.foreground,

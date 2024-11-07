@@ -13,6 +13,10 @@ struct QueuedPostDownloaderView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
+    @EnvironmentObject private var postDownloaderAndSaverAndBackuper: PostDownloaderAndSaverAndBackuper
+    
+    private let introVideo1URL = Bundle.main.url(forResource: "Intro 1 Clip-MPEG-4", withExtension: "mp4")!
+    
     private let recentPostWidth: CGFloat = 250.0
     private let recentPostMaxHeight: CGFloat = 450.0
     
@@ -25,46 +29,154 @@ struct QueuedPostDownloaderView: View {
     
     @State private var showAllPosts: Bool = false
     
+    @State private var isShowingTikTokInstructions: Bool = false // TODO: Add Instagram and YouTube instructions
+    
+    @State private var currentScrollPositioniOS17: Int? = 0
+    
     // TODO: Just show the recent ones starting from the front
     var body: some View {
-        SingleAxisGeometryReader(axis: .horizontal) { width in
-            ScrollViewReader { proxy in
-                Group {
-                    if #available(iOS 17.0, *) {
-                        ScrollView(.horizontal) {
-                            HStack {
-//                                Spacer(minLength: (width - recentPostWidth) / 2)
-                                ForEach(posts) { post in
-                                    PostDownloaderRowButton(
-                                        post: post,
-                                        onSelect: { presentingPost = post } )
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: recentPostWidth)
-                                }
-//                                Spacer(minLength: (width - recentPostWidth) / 2)
-                            }
-                            .padding(.horizontal, (width - recentPostWidth) / 2)
-                        }
-//                        .scrollTargetBehavior(.paging)
-                    } else {
-                        ScrollView(.horizontal) {
-                            HStack {
-                                Spacer(minLength: (width - recentPostWidth) / 2)
-                                ForEach(posts) { post in
-                                    PostDownloaderRowButton(
-                                        post: post,
-                                        onSelect: { presentingPost = post } )
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: recentPostWidth)
-                                }
-                                Spacer(minLength: (width - recentPostWidth) / 2)
-                            }
-                        }
+        Group {
+            if posts.isEmpty {
+                VStack {
+                    VStack(spacing: 8.0) {
+                        Text("Keep Your Favorite Posts Forever")
+                            .font(.custom(Constants.FontName.body, size: 17.0))
+//                            .padding(.vertical)
+                        Image(systemName: "lock")
+                            .font(.custom(Constants.FontName.light, size: 28.0))
+//                            .padding(.vertical)
                     }
+                    .foregroundStyle(Colors.text)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Colors.background)
+                    .clipShape(RoundedRectangle(cornerRadius: 14.0))
+                    .padding(.vertical)
+                    
+                    Text("To start, paste link above or...")
+                        .font(.custom(Constants.FontName.lightOblique, size: 14.0))
+                        .foregroundStyle(Colors.text)
+                        .padding(.top)
+                        .padding(.top)
+                    
+                    HStack {
+                        Image(systemName: "square.and.arrow.up")
+                            .font(.custom(Constants.FontName.heavy, size: 28.0))
+                            .foregroundStyle(Colors.text)
+                            .offset(y: -4)
+                        Text("Share to")
+                            .font(.custom(Constants.FontName.heavy, size: 28.0))
+                            .foregroundStyle(Colors.text)
+                        Image(Images.logoText)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 60.0, height: 60.0)
+                            .foregroundStyle(Colors.accent)
+                            .background(RoundedRectangle(cornerRadius: 14.0)
+                                .fill(Colors.background)) // Typically foreground but because this is on foreground it is background
+                            .aspectRatio(contentMode: .fit)
+                    }
+                    
+                    Text("from any app.")
+                        .font(.custom(Constants.FontName.lightOblique, size: 14.0))
+                        .foregroundStyle(Colors.text)
+                    
+                    Button(action: {
+                        isShowingTikTokInstructions = true
+                    }) {
+                        HStack {
+                            Image(systemName: "info.circle")
+                            Text("Show Tutorial")
+                        }
+                        .font(.custom(Constants.FontName.medium, size: 20.0))
+                        .foregroundStyle(Colors.elementBackgroundColor)
+                    }
+                    .padding(.top, 28.0)
+                    
+                    Spacer()
                 }
-                .scrollIndicators(.hidden)
+                .padding(.horizontal)
+            } else {
+                FeedView(
+                    posts: _posts,
+                    onSelectPost: { presentingPost = $0 })
             }
         }
+//        SingleAxisGeometryReader(axis: .horizontal) { width in
+//            ScrollViewReader { proxy in
+//                Group {
+//                    if #available(iOS 17.0, *) {
+//                        ScrollView(.horizontal) {
+//                            HStack {
+////                                Spacer(minLength: (width - recentPostWidth) / 2)
+//                                ForEach(posts.indices, id: \.self) { postIndex in
+//                                    PostDownloaderRowButton(
+//                                        post: posts[postIndex],
+//                                        onSelect: { presentingPost = posts[postIndex] } )
+//                                    .id(postIndex)
+//                                    .aspectRatio(contentMode: .fit)
+//                                    .frame(width: recentPostWidth)
+//                                    .containerRelativeFrame(.horizontal)
+//                                }
+////                                Spacer(minLength: (width - recentPostWidth) / 2)
+//                            }
+//                            .scrollTargetLayout()
+////                            .padding(.horizontal, (width - recentPostWidth) / 2)
+//                        }
+//                        .scrollTargetBehavior(.viewAligned)
+//                        .scrollPosition(id: $currentScrollPositioniOS17)
+//                        .overlay {
+//                            HStack {
+//                                if let currentScrollPositioniOS17 {
+//                                    if currentScrollPositioniOS17 > 0 {
+//                                        Button(action: {
+//                                            withAnimation {
+//                                                self.currentScrollPositioniOS17? -= 1
+//                                            }
+//                                        }) {
+//                                            Text(Image(systemName: "chevron.left"))
+//                                                .font(.custom(Constants.FontName.heavy, size: 17.0))
+//                                                .opacity(0.4)
+//                                                .padding()
+//                                        }
+//                                    }
+//                                    
+//                                    Spacer()
+//                                    
+//                                    if currentScrollPositioniOS17 < (posts.count - 1) {
+//                                        Button(action: {
+//                                            withAnimation {
+//                                                self.currentScrollPositioniOS17? += 1
+//                                            }
+//                                        }) {
+//                                            Text(Image(systemName: "chevron.right"))
+//                                                .font(.custom(Constants.FontName.heavy, size: 17.0))
+//                                                .opacity(0.4)
+//                                                .padding()
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    } else {
+//                        ScrollView(.horizontal) {
+//                            HStack {
+//                                Spacer(minLength: (width - recentPostWidth) / 2)
+//                                ForEach(posts) { post in
+//                                    PostDownloaderRowButton(
+//                                        post: post,
+//                                        onSelect: { presentingPost = post } )
+//                                    .aspectRatio(contentMode: .fit)
+//                                    .frame(width: recentPostWidth)
+//                                }
+//                                Spacer(minLength: (width - recentPostWidth) / 2)
+//                            }
+//                        }
+//                    }
+//                }
+//                .scrollIndicators(.hidden)
+//            }
+//        }
         
 //        ScrollViewReader { proxy in
 //            if queuedTikTokDownloader.recentlyDownloadedPosts.count == 1,
@@ -130,6 +242,16 @@ struct QueuedPostDownloaderView: View {
 //                }
 //            }
 //        }
+        .fullScreenCover(isPresented: $isShowingTikTokInstructions) {
+            IntroVideoView(
+                headerTopText: "Keep favorite posts",
+                headerBottomText: "FOREVER",
+                iconSystemName: "lock",
+                videoURL: introVideo1URL,
+                onNext: {
+                    isShowingTikTokInstructions = false
+                })
+        }
         .postContainer(post: $presentingPost)
         .task { // Begin processing queue
             // Ensure authToken
@@ -144,6 +266,7 @@ struct QueuedPostDownloaderView: View {
 
             queuedTikTokDownloader.startProcessingQueue(
                 authToken: authToken,
+                postDownloaderAndSaverAndBackuper: postDownloaderAndSaverAndBackuper,
                 mediaICloudUploadUpdater: mediaICloudUploadUpdater,
                 managedContext: viewContext)
         }
@@ -151,8 +274,14 @@ struct QueuedPostDownloaderView: View {
     
 }
 
-//#Preview {
-//    
-//    QueuedPostDownloaderView()
-//
-//}
+#Preview {
+    
+    ZStack {
+        Colors.foreground
+        ScrollView {
+            QueuedPostDownloaderView(queuedTikTokDownloader: QueuedTikTokDownloader())
+        }
+    }
+    .environmentObject(PostDownloaderAndSaverAndBackuper())
+
+}

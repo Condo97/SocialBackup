@@ -107,7 +107,9 @@ struct PostCollectionsView: View {
             .toolbar {
                 LogoToolbarItem()
                 
-                UltraToolbarItem(isShowingUltraView: $isShowingUltraView)
+                if !PremiumUpdater.get() {
+                    UltraToolbarItem(isShowingUltraView: $isShowingUltraView)
+                }
             }
             .navigationDestination(isPresented: isShowingPostCollection) {
                 if let presentingPostCollection = presentingPostCollection {
@@ -117,8 +119,9 @@ struct PostCollectionsView: View {
             }
             .navigationDestination(isPresented: $isShowingRecentPostsFauxCollection) {
                 PostCollectionView(
-                    title: "Recent Posts",
+//                    title: "Recent Posts",
                     posts: FetchRequest(sortDescriptors: [NSSortDescriptor(key: #keyPath(Post.lastModifyDate), ascending: false)]))
+                .navigationTitle("Recent Posts")
             }
             .ultraViewPopover(isPresented: $isShowingUltraView)
         }
