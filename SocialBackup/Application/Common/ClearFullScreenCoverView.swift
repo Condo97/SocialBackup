@@ -27,7 +27,7 @@ struct ClearFullScreenCoverView: UIViewRepresentable {
             view.superview?.superview?.backgroundColor = .clear
             
             UIView.animate(withDuration: 0.4, delay: 0.1, animations: {
-                view.alpha = backgroundVisibleOpacity
+                view.alpha = backgroundVisibleOpacity // TODO: Make the background opacity transition smooth when showing and hiding
             })
         }
         
@@ -43,7 +43,7 @@ struct ClearFullScreenCoverView: UIViewRepresentable {
 
 extension View {
     
-    func clearFullScreenCover<Content: View>(isPresented: Binding<Bool>, style: UIBlurEffect.Style? = nil, backgroundVisibleOpacity: CGFloat = 1.0, onDismiss: (()->Void)? = nil, @ViewBuilder content: @escaping ()->Content) -> some View {
+    func clearFullScreenCover<Content: View>(isPresented: Binding<Bool>, style: UIBlurEffect.Style? = nil, backgroundVisibleOpacity: CGFloat = 1.0, backgroundTapDismisses: Bool = true, onDismiss: (()->Void)? = nil, @ViewBuilder content: @escaping ()->Content) -> some View {
         self
             .fullScreenCover(isPresented: isPresented, onDismiss: onDismiss, content: {
                 ZStack {
@@ -52,11 +52,13 @@ extension View {
                     content()
                         .transition(.opacity)
                 }
-                .background(ClearFullScreenCoverView(style: style, backgroundVisibleOpacity: backgroundVisibleOpacity)
+                .background(ClearFullScreenCoverView(style: style, backgroundVisibleOpacity: backgroundVisibleOpacity) // TODO: Make the background opacity transition smooth when showing and hiding
                     .ignoresSafeArea()
                     .onTapGesture {
-                        DispatchQueue.main.async {
-                            isPresented.wrappedValue = false
+                        if backgroundTapDismisses {
+                            DispatchQueue.main.async {
+                                isPresented.wrappedValue = false
+                            }
                         }
                     })
             })

@@ -12,6 +12,7 @@ class QueuedTikTokDownloader: ObservableObject {
     
     @Published var recentlyDownloadedPosts: [Post] = []
     @Published var isProcessing: Bool = false
+    @Published var alertShowingErrorDownloadingPost: Bool = false
     
     private static let appGroupUserDefaults = UserDefaults(suiteName: Constants.Additional.appGroupName)
     private static let queueKey = "downloadQueue"
@@ -81,6 +82,11 @@ class QueuedTikTokDownloader: ObservableObject {
             } catch {
                 // TODO: Handle errors (e.g., retry logic or logging)
                 print("Error downloading and saving post in QueuedTikTokDownloader... \(error)")
+                
+                // Show error alert
+                DispatchQueue.main.async {
+                    self.alertShowingErrorDownloadingPost = true
+                }
             }
             
 //            // Remove the URL from the queue

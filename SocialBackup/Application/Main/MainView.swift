@@ -19,6 +19,8 @@ struct MainView: View {
     
     @State private var selectedTab: Tabs = .postDownloader
     
+    @State private var shouldBumpUpTabView: Bool = false
+    
     var body: some View {
 //        NavigationStack {
 //            ZStack {
@@ -43,7 +45,7 @@ struct MainView: View {
                 SearchView()
                     .tag(Tabs.home)
                 
-                PostDownloaderView()
+                PostDownloaderView(shouldBumpUpTabView: $shouldBumpUpTabView)
                     .tag(Tabs.postDownloader)
                 
                 PostCollectionsView()
@@ -89,6 +91,7 @@ struct MainView: View {
                 }
                 .padding()
             }
+            .padding(.bottom, shouldBumpUpTabView ? 68.0 : 0.0)
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
@@ -127,5 +130,6 @@ extension View {
 #Preview {
     
     MainView()
+        .environmentObject(PostDownloaderAndSaverAndBackuper())
     
 }

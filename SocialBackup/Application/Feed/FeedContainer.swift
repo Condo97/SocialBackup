@@ -9,6 +9,9 @@ import SwiftUI
 
 struct FeedContainer: View {
     
+    @Binding var isSelecting: Bool
+    @Binding var selected: [Post]
+    
     @Environment(\.managedObjectContext) private var viewContext
     
 //    @FetchRequest(
@@ -55,6 +58,8 @@ struct FeedContainer: View {
                 Spacer(minLength: 130.0 + (selectedFilterWords.count == 0 ? 0 : 50.0))
                 ScrollView {
                     FeedView(
+                        isSelecting: $isSelecting,
+                        selected: $selected,
                         posts: FetchRequest(
                             sortDescriptors: [NSSortDescriptor(key: #keyPath(Post.lastModifyDate), ascending: false)],
                             predicate: postFilterPredicate),
@@ -198,8 +203,11 @@ struct FeedContainer: View {
 
 #Preview {
     
-    FeedContainer()
-        .environment(\.managedObjectContext, CDClient.mainManagedObjectContext)
-        .environmentObject(MediaICloudUploadUpdater())
+    FeedContainer(
+        isSelecting: .constant(false),
+        selected: .constant([])
+    )
+    .environment(\.managedObjectContext, CDClient.mainManagedObjectContext)
+    .environmentObject(MediaICloudUploadUpdater())
     
 }

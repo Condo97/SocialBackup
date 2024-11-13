@@ -58,13 +58,24 @@ class PostDownloaderAndSaverAndBackuper: ObservableObject {
             return nil
         }
         
-        // Shortcut steps 2-6 with repair
-        try await
-        repair(
-            post: post,
-            authToken: authToken,
-            mediaICloudUploadUpdater: mediaICloudUploadUpdater,
-            in: managedContext)
+        do {
+            // Shortcut steps 2-6 with repair
+            try await
+            repair(
+                post: post,
+                authToken: authToken,
+                mediaICloudUploadUpdater: mediaICloudUploadUpdater,
+                in: managedContext)
+        } catch {
+            // If there was an error repairing the post delete the post in CoreData and throw error
+            try await managedContext.perform {
+                managedContext.delete(post)
+                
+                try managedContext.save()
+            }
+            
+            throw error
+        }
 //        // Step 2
 //        try await stepTwo_GetUpdatePostInfoInPost(post, authToken: authToken, in: managedContext)
 //        

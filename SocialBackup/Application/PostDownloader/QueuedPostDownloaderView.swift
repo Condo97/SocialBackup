@@ -9,6 +9,8 @@ import SwiftUI
 
 struct QueuedPostDownloaderView: View {
     
+    @Binding var isSelecting: Bool
+    @Binding var selected: [Post]
     @ObservedObject var queuedTikTokDownloader: QueuedTikTokDownloader
     
     @Environment(\.managedObjectContext) private var viewContext
@@ -98,9 +100,16 @@ struct QueuedPostDownloaderView: View {
                 .padding(.horizontal)
             } else {
                 FeedView(
+                    isSelecting: $isSelecting,
+                    selected: $selected,
                     posts: _posts,
                     onSelectPost: { presentingPost = $0 })
             }
+        }
+        .alert("Error GRABbing", isPresented: $queuedTikTokDownloader.alertShowingErrorDownloadingPost, actions: {
+            Button("Done", role: .cancel) { }
+        }) {
+            Text("Could not download post. Please check the URL and try again.")
         }
 //        SingleAxisGeometryReader(axis: .horizontal) { width in
 //            ScrollViewReader { proxy in
@@ -279,7 +288,10 @@ struct QueuedPostDownloaderView: View {
     ZStack {
         Colors.foreground
         ScrollView {
-            QueuedPostDownloaderView(queuedTikTokDownloader: QueuedTikTokDownloader())
+            QueuedPostDownloaderView(
+                isSelecting: .constant(false),
+                selected: .constant([]),
+                queuedTikTokDownloader: QueuedTikTokDownloader())
         }
     }
     .environmentObject(PostDownloaderAndSaverAndBackuper())

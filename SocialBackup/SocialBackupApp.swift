@@ -31,6 +31,8 @@ struct SocialBackupApp: App {
         
         UIView.appearance().tintColor = UIColor(Colors.text)
         
+        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = UIColor(Colors.foreground)
+        
 //        UITextField.appearance().tintColor = UIColor(Colors.text)
     }
     

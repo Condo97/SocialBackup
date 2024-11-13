@@ -17,7 +17,7 @@ struct Constants {
         static let defaultShareURL = URL(string: "https://apple.com")! // TODO: Add default share URL
         static let fallbackAnnualProductID = "grab_ultrayearly" // TODO: Add fallback annual product ID
         static let fallbackMonthlyProductID = "grab_ultramonthly" // TODO: Add fallback monthly product ID
-        static let fallbackSharedSecret = "" // TODO: Add shared secret
+        static let fallbackSharedSecret = "306809cadd314fb38d46ac1b69ffcd6d" // TODO: Add shared secret
         static let fallbackWeeklyProductID = "grab_ultraweekly" // TODO: Add fallback weekly product ID
         
     }
