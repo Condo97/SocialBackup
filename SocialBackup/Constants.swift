@@ -66,8 +66,8 @@ struct Constants {
             
         }
         
-        static let termsAndConditions = "" // TODO: Add terms and conditions URL
-        static let privacyPolicy = "" // TODO: Add privacy policy URL
+        static let termsAndConditions = "https://writesmithapp.weebly.com/terms-and-conditions-eula1.html" // TODO: Add terms and conditions URL
+        static let privacyPolicy = "https://writesmithapp.weebly.com/privacy-policy1.html" // TODO: Add privacy policy URL
         
     }
     
